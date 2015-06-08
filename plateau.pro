@@ -33,9 +33,7 @@ genererPiles(NewPiles) :-
 	append(Piles6, [P7], Piles7),
 	append(Piles7, [P8], Piles8),
 	append(Piles8, [P9], NewPiles),
-	!,
-	print('Piles: '),
-	print(NewPiles), nl.
+	!.
 
 %plateauInit(-Piles, -Bourse, -Pos)
 plateauInit(Piles, Bourse, Pos) :-
@@ -66,10 +64,13 @@ plateauCheckEnd(Piles) :-
 	Length =< 2.
 
 %plateauDisplay(+Bourse, +Piles, +Pos)
-plateauDisplay(Bourse,Piles,Pos) :-
+plateauDisplay(Piles,Bourse,Pos) :-
 	print('Voici les cours de la bourses:'), nl,
 	msort(Bourse, BourseTriee),
-	printDoubleArray(BourseTriee),
+	print(BourseTriee), nl,
+
 	print('Voici les piles disponibles (taille puis marchandise du dessus)'), nl,
-	printDoubleArray(Piles),
+	getPilesTops(Piles, Tops),
+	print(Tops), nl,
+
 	print('Position du Trader: '), print(Pos), nl.
