@@ -3,16 +3,17 @@ marchandisesDepart(	[[ble,6],[riz,6],[cacao,6],[cafe,2],[sucre,2],[mais,1]]).
 
 
 
-takeElement(Marchandises, Elem, NewMarchandises) :-  %Needs to be removed
-	randomElem(Marchandises, Elem),
-	decrement(Marchandises, Elem, NewMarchandises).
 
 genererPile(Marchandises, NewPile, NewMarchandises) :-
 	emptyList(Pile),
-	takeElement(Marchandises , E1, Marchandises2),
-	takeElement(Marchandises2, E2, Marchandises3),
-	takeElement(Marchandises3, E3, Marchandises4),
-	takeElement(Marchandises4, E4, NewMarchandises),
+	randomElem(Marchandises , E1),
+	decrement(Marchandises , E1, Marchandises2), %needs to be in this order to avoid selected unavailable products
+	randomElem(Marchandises2, E2),
+	decrement(Marchandises , E2, Marchandises3),
+	randomElem(Marchandises3, E3),
+	decrement(Marchandises , E3, Marchandises4),
+	randomElem(Marchandises4, E4),
+	decrement(Marchandises , E4, NewMarchandises),
 	append(Pile , [E1], Pile2),
 	append(Pile2, [E2], Pile3),
 	append(Pile3, [E3], Pile4),
@@ -60,7 +61,7 @@ plateauAvancer(Piles, NewPiles, Pos, NewPos, Dist, Elem1, Elem2) :-
 	NewPos  is (Pos + Dist) mod L1,
 	PosPrendre1 is (NewPos - 1) mod L1,  %mod always return positive numbers
 	prendrePion( Piles , Piles2  , PosPrendre1, Elem1 ),
-	length(Piles2, L2), %A pile could have been removed
+	length(Piles2, L2), % A pile could have been removed
 	PosPrendre2 is (NewPos + 1) mod L2,
 	prendrePion( Piles2, NewPiles, PosPrendre2, Elem2 ).
 
@@ -78,8 +79,8 @@ printPiles(Piles, Trader) :-
 
 printPiles(_    , _     , Length, Length) :- !.
 printPiles(Piles, Trader, Pos   , Length) :-
-	printIfElse(0     , Pos  , 'Piles:\t'  , '      \t'  ),
-	printIfElse(Trader, Pos, 'Trader | ', '       | '),
+	printIfElse(0     , Pos, 'Piles:\t'  , '      \t'  ),
+	printIfElse(Trader, Pos, 'Trader | ' , '       | ' ),
 	nth0(Pos, Piles, Pile),
 	printPile(Pile), nl,
 	NewPos is Pos+1,
@@ -106,4 +107,5 @@ plateauDisplay(Piles,Bourse,Pos) :-
 	reverse(BourseTriee, BourseTrieeDescendant),
 	printTable(BourseTrieeDescendant, 'Bourse:\t', '       \t'),
 
-	printPiles(Piles, Pos).
+	printPiles(Piles, Pos),
+	print('Debug Piles: '), print(Piles), nl.
