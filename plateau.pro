@@ -1,5 +1,5 @@
-marchandises([[ble,7],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
-
+bourse(				[[ble,7],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
+marchandisesDepart(	[[ble,6],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
 
 genererPile(Marchandises, NewPile, NewMarchandises) :-
 	emptyList(Pile),
@@ -11,8 +11,6 @@ genererPile(Marchandises, NewPile, NewMarchandises) :-
 	append(Pile2, [E2], Pile3),
 	append(Pile3, [E3], Pile4),
 	append(Pile4, [E4], NewPile).
-
-marchandisesDepart([[ble,6],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
 
 genererPiles(NewPiles) :-
 	marchandisesDepart(M),
@@ -39,10 +37,11 @@ genererPiles(NewPiles) :-
 	print('Piles: '),
 	print(NewPiles), nl.
 
-
-plateauInit(Piles, Bourse) :-
+%plateauInit(-Piles, -Bourse, -Pos)
+plateauInit(Piles, Bourse, Pos) :-
 	genererPiles(Piles),
-	Bourse = [].
+	bourse(Bourse),
+	Pos is 0.
 
 
 
@@ -52,7 +51,7 @@ plateauInit(Piles, Bourse) :-
 %plateauAvancer(+Piles, -NewPiles, +Pos, -NewPos, +Dist, -Elem1, -Elem2)
 plateauAvancer(Piles, NewPiles, Pos, NewPos, Dist, Elem1, Elem2) :-
 	Dist > 0,
-	Dist <= 3, %end of checks
+	Dist =< 3, %end of checks
 	length(Piles, L1),
 	NewPos is ( Pos+Dist ) mod L1,
 	prendrePion( Piles , Piles2  , (NewPos - 1) mod L1, Elem1 ), %mod always return positive numbers
@@ -64,7 +63,7 @@ plateauAvancer(Piles, NewPiles, Pos, NewPos, Dist, Elem1, Elem2) :-
 %plateauCheckEnd(+Piles)
 plateauCheckEnd(Piles) :-
 	length(Piles, Length),
-	Length <= 2.
+	Length =< 2.
 
 %plateauDisplay(+Bourse, +Piles, +Pos)
 plateauDisplay(Bourse,Piles,Pos) :-
@@ -72,5 +71,5 @@ plateauDisplay(Bourse,Piles,Pos) :-
 	msort(Bourse, BourseTriee),
 	printDoubleArray(BourseTriee),
 	print('Voici les piles disponibles (taille puis marchandise du dessus)'), nl,
-	printDoubleArray(Bourse),
+	printDoubleArray(Piles),
 	print('Position du Trader: '), print(Pos), nl.

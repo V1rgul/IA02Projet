@@ -11,7 +11,10 @@ main :-
 	take(X) :-
 		print('take:'), print(X), nl.*/
 
-	marchandises(Stocks),
-	afficherBourse(Stocks),
+	plateauInit(Stocks, Bourse, Pos),
+	plateauDisplay(Stocks, Bourse, Pos),
+
+
+
 	decrement(Stocks, sucre, NewStocks),
-	afficherBourse(NewStocks).
+	plateauDisplay(NewStocks, Bourse, Pos).

@@ -58,7 +58,7 @@ decrementValue(Name, Value, SearchedName, Elem) :-
 randomElem(Liste, Element) :-
     length(Liste, Size),
     random(0, Size, Index),
-    nth0(Index, List, ElementValue),
+    nth0(Index, Liste, ElementValue),
     [Element, _] is ElementValue.
 
 
