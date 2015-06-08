@@ -37,12 +37,26 @@ decrementValue(Name, Value, SearchedName, Elem) :-
 %	+Elem:		sucre
 %	-NewList:	[[sucre,1],[ble,1]]
 
-%random_member(+Liste, -Element)
+%prendrePion(+Piles,-NewPiles,+Pos,-Elem)
+%	Exemple:
+%	+Pile:		[[sucre,riz,ble],[cacao,cafe],[mais]]
+%	-NewPile	[[sucre,riz,ble],[cafe],[mais]]
+%	+Pos:		1
+%	-Elem:		cacao
+%	Exemple:
+%	+Pile:		[[sucre,riz,ble],[cacao,cafe],[mais]]
+%	-NewPile	[[sucre,riz,ble],[cafe]]
+%	+Pos:		2
+%	-Elem:		mais
+
+
+
+%randomElem(+Liste, -Element)
 %	Exemple:
 %	+List:		[[sucre,3],[ble,1]]
 %	-Elem:		ble
-randomElem(List, Element) :-
-    length(List, Size),
+randomElem(Liste, Element) :-
+    length(Liste, Size),
     random(0, Size, Index),
     nth0(Index, List, ElementValue),
     [Element, _] is ElementValue.
