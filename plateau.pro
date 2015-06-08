@@ -65,3 +65,12 @@ plateauAvancer(Piles, NewPiles, Pos, NewPos, Dist, Elem1, Elem2) :-
 plateauCheckEnd(Piles) :-
 	length(Piles, Length),
 	Length <= 2.
+
+%plateauDisplay(+Bourse, +Piles, +Pos)
+plateauDisplay(Bourse,Piles,Pos) :-
+	print('Voici les cours de la bourses:'), nl,
+	msort(Bourse, BourseTriee),
+	printDoubleArray(BourseTriee),
+	print('Voici les piles disponibles (taille puis marchandise du dessus)'), nl,
+	printDoubleArray(Bourse),
+	print('Position du Trader: '), print(Pos), nl.

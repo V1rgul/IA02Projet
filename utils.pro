@@ -61,6 +61,29 @@ randomElem(Liste, Element) :-
     nth0(Index, List, ElementValue),
     [Element, _] is ElementValue.
 
+
+
+%printDoubleArray(+Bourse)
+printDoubleArray([]).
+printDoubleArray([H|T]) :-
+	nth0(0, H, Value),
+	nth0(1, H, Name),
+	print(Value),
+	write('\t'),
+	print(Name), nl,
+	printDoubleArray(T).
+	
+
+
+
+
+
+
+
+
+
+
+
 %take1(+Elem, -name, -newElem)
 reduceNumber([Name,1], Name, []).
 reduceNumber([Name, N], Name, [[Name, O]]) :-
