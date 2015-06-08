@@ -1,9 +1,4 @@
-
 marchandises([[ble,7],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
-
-
-
-
 
 
 genererPile(Marchandises, NewPile, NewMarchandises) :-

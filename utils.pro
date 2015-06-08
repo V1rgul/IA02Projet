@@ -29,10 +29,12 @@ emptyList([]).
 %	-Elem:		ble
 
 
-random_member(L, E) :-
-    length(L, S),
-    random(0, S, I),
-    nth0(I, L, E).
+%random_member(+Liste, -Element)
+random_member(Liste, Element) :-
+    length(Liste, Size),
+    random(0, Size, Index),
+    nth0(Index, Liste, ElementValue),
+    [Element, _] is ElementValue.
 
 %take1(+Elem, -name, -newElem)
 reduceNumber([Name,1], Name, []).
