@@ -45,7 +45,7 @@ decrementValue(Name, Value, SearchedName, Elem) :-
 %	-Elem:		cacao
 %	Exemple:
 %	+Pile:		[[sucre,riz,ble],[cacao,cafe],[mais]]
-%	-NewPile	[[sucre,riz,ble],[cafe]]
+%	-NewPile	[[sucre,riz,ble],[cacao,cafe]]
 %	+Pos:		2
 %	-Elem:		mais
 
