@@ -1,6 +1,8 @@
 
 
-:- include('init.pro').
+:- include('utils.pro').
+:- include('plateau.pro').
+:- include('joueur.pro').
 
 
 /*
