@@ -15,19 +15,20 @@ main :-
 
 
 	plateauInit(Piles, Bourse, Pos),
+
 	plateauDisplay(Piles, Bourse, Pos), nl,
+	
 
 	emptyList(J1),
 
-
 	plateauAvancer(Piles, NewPiles, Pos, NewPos, 2, Elem1, Elem2),
 	print('Avancé de 2'), nl,
-	
+
 	plateauDisplay(NewPiles, NewBourse, NewPos),
 
-	jouer(J1, _ , Bourse, NewBourse, Elem1, Elem2),
-	print('Garde de '), print(Elem1), print(' Vente de '), print(Elem2), nl,
 
+	jouer(J1, _ , Bourse, NewBourse, Elem1, Elem2),
+	print('Garde de '), print(Elem1), print(', Vente de '), print(Elem2), nl,
 
 	plateauDisplay(NewPiles, NewBourse, NewPos).
 

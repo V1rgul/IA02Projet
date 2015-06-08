@@ -17,8 +17,7 @@ appendNonEmptyA(A, B, C) :-
 %	+List:		[[sucre,1],[ble,1]]
 %	+SearchedName:		sucre
 %	-NewList:	[[ble,1]]
-decrement([], SearchedName, []) :-
-	!.
+decrement([]   , _           , []     ) :- !.
 decrement([T|Q], SearchedName, NewList) :-
 	[Name, Value] = T,
 	decrementValue(Name, Value, SearchedName, DecrementedElem),
@@ -29,7 +28,7 @@ decrement([T|Q], SearchedName, NewList) :-
 decrementValue(SearchedName, Value, SearchedName, Elem) :-
 	ValueTemp is Value-1,
 	Elem = [[SearchedName, ValueTemp]].
-decrementValue(Name, Value, SearchedName, Elem) :-
+decrementValue(Name        , Value, _           , Elem) :-
 	Elem = [[Name, Value]].
 
 %increment(+List,+Elem,-NewList)
