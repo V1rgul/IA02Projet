@@ -59,7 +59,8 @@ randomElem(Liste, Element) :-
     length(Liste, Size),
     random(0, Size, Index),
     nth0(Index, Liste, ElementValue),
-    [Element, _] is ElementValue.
+    %[Element, _] is ElementValue.
+    nth0(0, ElementValue, Element).
 
 
 %getPileTop(+Piles, +Index, -Elem)
@@ -82,16 +83,8 @@ getPilesTops([H|T], [NH|NT]) :-
 
 
 
-
-
-%take1(+Elem, -name, -newElem)
-reduceNumber([Name,1], Name, []).
-reduceNumber([Name, N], Name, [[Name, O]]) :-
-	O is N-1.
 	
 
 takeElement(Marchandises, Elem, NewMarchandises) :-
-	random_member(Marchandises, E),
-	delete(Marchandises, E, Marchandises2),
-	reduceNumber(E, Elem, NewE),
-	append(Marchandises2, NewE, NewMarchandises).
+	randomElem(Marchandises, Elem),
+	decrement(Marchandises, Elem, NewMarchandises).
