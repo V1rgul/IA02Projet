@@ -37,30 +37,55 @@ random_member(L, E) :-
     random(0, S, I),
     nth0(I, L, E).
 
-reduceNumber([_,0], NULL).
-reduceNumber([E,N], [E, O]) :-
+%take1(+Elem, -name, -newElem)
+reduceNumber([Name,1], Name, []).
+reduceNumber([Name, N], Name, [[Name, O]]) :-
 	O is N-1.
 	
 
 takeElement(Marchandises, Elem, NewMarchandises) :-
 	random_member(Marchandises, E),
 	delete(Marchandises, E, Marchandises2),
-	reduceNumber(E, NewE),
-	append(Marchandises2, [NewE], NewMarchandises),
-	[Elem, _] = NewE.
+	reduceNumber(E, Elem, NewE),
+	append(Marchandises2, NewE, NewMarchandises).
 
 genererPile(Marchandises, NewPile, NewMarchandises) :-
 	emptyList(Pile),
 	takeElement(Marchandises , E1, Marchandises2),
-	append(Pile , [E1], Pile2),
 	takeElement(Marchandises2, E2, Marchandises3),
-	append(Pile2, [E2], Pile3),
 	takeElement(Marchandises3, E3, Marchandises4),
-	append(Pile3, [E3], Pile4),
 	takeElement(Marchandises4, E4, NewMarchandises),
-	append(Pile4, [E4], NewPile).
+	append(Pile , [E1], Pile2),
+	append(Pile2, [E2], Pile3),
+	append(Pile3, [E3], Pile4),
+	append(Pile4, [E4], NewPile),
+	print('stock temporaire '),
+	print(NewMarchandises), nl.
 
-genererPiles :-
-	marchandises(M),
-	genererPile(M, P, _),
-	print(P).
+
+marchandisesDepart([[ble,6],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
+
+genererPiles(NewPiles) :-
+	marchandisesDepart(M),
+	genererPile(M , P1, M1),
+	genererPile(M1, P2, M2),
+	genererPile(M2, P3, M3),
+	genererPile(M3, P4, M4),
+	genererPile(M4, P5, M5),
+	genererPile(M5, P6, M6),
+	genererPile(M6, P7, M7),
+	genererPile(M7, P8, M8),
+	genererPile(M8, P9, _),
+	emptyList(Piles),
+	append(Piles , [P1], Piles1),
+	append(Piles1, [P2], Piles2),
+	append(Piles2, [P3], Piles3),
+	append(Piles3, [P4], Piles4),
+	append(Piles4, [P5], Piles5),
+	append(Piles5, [P6], Piles6),
+	append(Piles6, [P7], Piles7),
+	append(Piles7, [P8], Piles8),
+	append(Piles8, [P9], NewPiles),
+	!,
+	print('Piles: '),
+	print(NewPiles), nl.
