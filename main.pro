@@ -16,3 +16,10 @@ changerValeur(Stocks, Value, Add, NewStocks) :-
 main :-
 	marchandises(Marchand),
 	afficherListe(Marchand).
+
+do(take(X)) :- !, take(X).
+do(X) :- print("unknown command:"), print(X), nl.
+
+take(X) :-
+	print('take:'), print(X), nl.
+	
