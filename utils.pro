@@ -3,15 +3,29 @@
 emptyList([]).
 
 
-%decrement(+List,+Elem,-NewList)
+%decrement(+List,+SearchedName,-NewList)
 %	Exemple:
 %	+List:		[[sucre,3],[ble,1]]
-%	+Elem:		sucre
+%	+SearchedName:		sucre
 %	-NewList:	[[sucre,2],[ble,1]]
 %	Exemple:
 %	+List:		[[sucre,1],[ble,1]]
-%	+Elem:		sucre
+%	+SearchedName:		sucre
 %	-NewList:	[[ble,1]]
+decrement([], SearchedName, []) :-
+	!.
+decrement([T|Q], SearchedName, NewList) :-
+	[Name, Value] = T,
+	decrementValue(Name, Value, SearchedName, DecrementedElem),
+	decrement(Q, SearchedName, NewListRec),
+	append(DecrementedElem, NewListRec, NewList).
+
+%decrementValue(+Name, +Value, +SearchedName, -Elem)
+decrementValue(SearchedName, Value, SearchedName, Elem) :-
+	ValueTemp is Value-1,
+	Elem = [[SearchedName, ValueTemp]].
+decrementValue(Name, Value, SearchedName, Elem) :-
+	Elem = [[Name, Value]].
 
 %increment(+List,+Elem,-NewList)
 %	Exemple:
@@ -23,17 +37,14 @@ emptyList([]).
 %	+Elem:		sucre
 %	-NewList:	[[sucre,1],[ble,1]]
 
-%randomElem(+List,-Elem)
+%random_member(+Liste, -Element)
 %	Exemple:
 %	+List:		[[sucre,3],[ble,1]]
 %	-Elem:		ble
-
-
-%random_member(+Liste, -Element)
-random_member(Liste, Element) :-
-    length(Liste, Size),
+randomElem(List, Element) :-
+    length(List, Size),
     random(0, Size, Index),
-    nth0(Index, Liste, ElementValue),
+    nth0(Index, List, ElementValue),
     [Element, _] is ElementValue.
 
 %take1(+Elem, -name, -newElem)

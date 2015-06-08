@@ -22,5 +22,5 @@ main :-
 
 	marchandises(Stocks),
 	afficherBourse(Stocks),
-	takeElement(Stocks, ble, NewStocks),
+	decrement(Stocks, sucre, NewStocks),
 	afficherBourse(NewStocks).
