@@ -4,22 +4,7 @@ marchandises([[ble,7],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
 
 
 
-random_member(L, E) :-
-    length(L, S),
-    random(0, S, I),
-    nth0(I, L, E).
 
-%take1(+Elem, -name, -newElem)
-reduceNumber([Name,1], Name, []).
-reduceNumber([Name, N], Name, [[Name, O]]) :-
-	O is N-1.
-	
-
-takeElement(Marchandises, Elem, NewMarchandises) :-
-	random_member(Marchandises, E),
-	delete(Marchandises, E, Marchandises2),
-	reduceNumber(E, Elem, NewE),
-	append(Marchandises2, NewE, NewMarchandises).
 
 genererPile(Marchandises, NewPile, NewMarchandises) :-
 	emptyList(Pile),
@@ -60,5 +45,6 @@ genererPiles(NewPiles) :-
 	print(NewPiles), nl.
 
 
-init(Piles) :-
-	genererPiles(Piles).
+initPlateau(Piles, Bourse) :-
+	genererPiles(Piles),
+	Bourse = [].
