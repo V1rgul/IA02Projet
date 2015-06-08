@@ -2,6 +2,11 @@
 
 emptyList([]).
 
+appendNonEmptyA([[]], B,  C) :-
+	C = B.
+appendNonEmptyA(A, B, C) :-
+	append(A, B, C).
+
 
 %decrement(+List,+SearchedName,-NewList)
 %	Exemple:
@@ -37,7 +42,7 @@ decrementValue(Name, Value, SearchedName, Elem) :-
 %	+Elem:		sucre
 %	-NewList:	[[sucre,1],[ble,1]]
 
-%prendrePion(+Piles,-NewPiles,+Pos,-Elem)
+%prendrePion(+Piles,+Pos,-NewPiles,-Elem)
 %	Exemple:
 %	+Pile:		[[sucre,riz,ble],[cacao,cafe],[mais]]
 %	-NewPile	[[sucre,riz,ble],[cafe],[mais]]
@@ -48,7 +53,17 @@ decrementValue(Name, Value, SearchedName, Elem) :-
 %	-NewPile	[[sucre,riz,ble],[cacao,cafe]]
 %	+Pos:		2
 %	-Elem:		mais
-
+prendrePion([], Pos, [], ElemToRemove) :-
+	!.
+prendrePion([T|Q], 0, NewPiles, ElemToRemove) :-
+	[Elem|Others] = T,
+	ElemToRemove = Elem,
+	prendrePion(Q, -1, TempNewPiles, ElemToRemove),
+	appendNonEmptyA([Others], TempNewPiles, NewPiles).
+prendrePion([T|Q], Pos, NewPiles, ElemToRemove) :-
+	TempPos is Pos-1,
+	prendrePion(Q, TempPos, TempNewPiles, ElemToRemove),
+	append([T], TempNewPiles, NewPiles).
 
 
 %randomElem(+Liste, -Element)
