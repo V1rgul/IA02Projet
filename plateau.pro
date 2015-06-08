@@ -1,5 +1,11 @@
 bourse(				[[ble,7],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
-marchandisesDepart(	[[ble,6],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
+marchandisesDepart(	[[ble,6],[riz,6],[cacao,6],[cafe,2],[sucre,2],[mais,1]]).
+
+
+
+takeElement(Marchandises, Elem, NewMarchandises) :-  %Needs to be removed
+	randomElem(Marchandises, Elem),
+	decrement(Marchandises, Elem, NewMarchandises).
 
 genererPile(Marchandises, NewPile, NewMarchandises) :-
 	emptyList(Pile),
@@ -63,14 +69,39 @@ plateauCheckEnd(Piles) :-
 	length(Piles, Length),
 	Length =< 2.
 
+
+printPiles(Piles, Trader) :-
+	length(Piles, Length),
+	printPiles(Piles, Trader, 0, Length).
+
+printPiles(_    , _     , Length, Length) :- !.
+printPiles(Piles, Trader, Pos   , Length) :-
+	printIfElse(0     , Pos  , 'Piles:\t'  , '      \t'  ),
+	printIfElse(Trader, Pos, 'Trader | ', '       | '),
+	nth0(Pos, Piles, Pile),
+	printPile(Pile), nl,
+	NewPos is Pos+1,
+	printPiles(Piles, Trader, NewPos, Length).
+
+printPile(Pile) :-
+	nth0(0, Pile, Top),
+	print(Top), print('\t'),
+	length(Pile, Length),
+	printPileStack(Length-1).
+printPileStack(0) :- !.
+printPileStack(N) :-
+	N2 is N - 1,
+	print('------ '),
+	printPileStack(N2).
+
+
+
 %plateauDisplay(+Bourse, +Piles, +Pos)
 plateauDisplay(Piles,Bourse,Pos) :-
-	print('Voici les cours de la bourses:'), nl,
-	msort(Bourse, BourseTriee),
-	print(BourseTriee), nl,
+	
+	inverseKV(Bourse, InvertedBourse),
+	msort(InvertedBourse, BourseTriee),
+	reverse(BourseTriee, BourseTrieeDescendant),
+	printTable(BourseTrieeDescendant, 'Bourse:\t', '       \t'),
 
-	print('Voici les piles disponibles (taille puis marchandise du dessus)'), nl,
-	getPilesTops(Piles, Tops),
-	print(Tops), nl,
-
-	print('Position du Trader: '), print(Pos), nl.
+	printPiles(Piles, Pos).

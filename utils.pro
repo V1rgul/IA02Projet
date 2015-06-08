@@ -74,32 +74,51 @@ randomElem(Liste, Element) :-
     length(Liste, Size),
     random(0, Size, Index),
     nth0(Index, Liste, ElementValue),
-    %[Element, _] is ElementValue.
     nth0(0, ElementValue, Element).
 
 
-%getPileTop(+Piles, +Index, -Elem)
-getPileTop(Piles, Index, Elem) :-
-	nth0(Index, Piles, Elem).
+	
+%inverseKV(+List,-NewList)
+%	Exemple:
+%	+List:		[[sucre,3],[ble,1]]
+%	-NewList:	[[3,sucre],[1,ble]]
+inverseKV([],[]).
+inverseKV([H|T],[NH|NT]) :-
+	nth0(0, H, K),
+	nth0(1, H, V),
+	NH = [V, K],
+	inverseKV(T, NT).
 
-%getPilesTops(Piles, Tops) :-
-getPilesTops([],[]).
-getPilesTops([H|T], [NH|NT]) :-
-	nth0(0, H, NH),
-	getPilesTops(T,NT).
+
+
+%printIfElse(+A, +B, +TextEquals, +TextNonEquals)
+%prints TextEquals if A == B, TextNonEquals else
+printIfElse(A, A, TextEquals, _            ) :-
+	print(TextEquals), !.
+printIfElse(_, _, _         , TextNonEquals) :-
+	print(TextNonEquals).
+
+
+printTable(Table, Title, TitleSpaces) :-
+	length(Table, Length),
+	printTable(Table, Title, TitleSpaces, 0, Length).
+printTable(_    , _    , _          , Length, Length) :- !.
+printTable(Table, Title, TitleSpaces, Pos   , Length) :-
+	printIfElse(Pos, 0, Title, TitleSpaces),
+	nth0(Pos, Table, Line),
+	length(Line, LineLength),
+	printTableLine(Line, 0, LineLength), nl,
+	Pos2 is Pos+1,
+	printTable(Table, Title, TitleSpaces, Pos2, Length).
+
+printTableLine(_   , Length, Length) :- !.
+printTableLine(Line, Pos   , Length) :-
+	printIfElse(Pos, 0, '', ' | '),
+	nth0(Pos, Line, Elem),
+	print(Elem),
+	Pos2 is Pos+1,
+	printTableLine(Line, Pos2, Length).
+
 
 	
 
-
-
-
-
-
-
-
-
-	
-
-takeElement(Marchandises, Elem, NewMarchandises) :-
-	randomElem(Marchandises, Elem),
-	decrement(Marchandises, Elem, NewMarchandises).

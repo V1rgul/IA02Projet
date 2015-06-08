@@ -18,8 +18,10 @@ main :-
 	plateauDisplay(Piles, Bourse, Pos), nl,
 
 
-
 	decrement(Bourse, sucre, NewBourse),
+	print('Sucre vendu'), nl, nl,
+
+
 	plateauDisplay(Piles, NewBourse, Pos).
 
 
