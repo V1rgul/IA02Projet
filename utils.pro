@@ -77,16 +77,16 @@ randomElem(Liste, Element) :-
     [Element, _] is ElementValue.
 
 
+%getPileTop(+Piles, +Index, -Elem)
+getPileTop(Piles, Index, Elem) :-
+	nth0(Index, Piles, Elem).
 
-%printDoubleArray(+Bourse)
-printDoubleArray([]).
-printDoubleArray([H|T]) :-
-	nth0(0, H, Value),
-	nth0(1, H, Name),
-	print(Value),
-	write('\t'),
-	print(Name), nl,
-	printDoubleArray(T).
+%getPilesTops(Piles, Tops) :-
+getPilesTops([],[]).
+getPilesTops([H|T], [NH|NT]) :-
+	nth0(0, H, NH),
+	getPilesTops(T,NT).
+
 	
 
 
