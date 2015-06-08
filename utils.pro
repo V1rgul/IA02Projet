@@ -28,6 +28,19 @@ emptyList([]).
 %	+List:		[[sucre,3],[ble,1]]
 %	-Elem:		ble
 
+%prendrePion(+Piles,-NewPiles,+Pos,-Elem)
+%	Exemple:
+%	+Pile:		[[sucre,riz,ble],[cacao,cafe],[mais]]
+%	-NewPile	[[sucre,riz,ble],[cafe],[mais]]
+%	+Pos:		1
+%	-Elem:		cacao
+%	Exemple:
+%	+Pile:		[[sucre,riz,ble],[cacao,cafe],[mais]]
+%	-NewPile	[[sucre,riz,ble],[cafe]]
+%	+Pos:		2
+%	-Elem:		mais
+
+
 
 %random_member(+Liste, -Element)
 random_member(Liste, Element) :-

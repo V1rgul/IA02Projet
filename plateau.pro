@@ -50,5 +50,18 @@ plateauInit(Piles, Bourse) :-
 
 
 %plateauAvancer(+Piles, -NewPiles, +Pos, -NewPos, +Dist, -Elem1, -Elem2)
+plateauAvancer(Piles, NewPiles, Pos, NewPos, Dist, Elem1, ELem2) :-
+	Dist > 0,
+	Dist <= 3, %end of checks
+	length(Piles, L1),
+	NewPos is ( Pos+Dist ) mod L1,
+	prendrePion( Piles , Piles2  , (NewPos - 1) mod L1, Elem1 ), %mod always return positive numbers
+	length(Piles2, L2), %A pile could have been removed
+	prendrePion( Piles2, NewPiles, (NewPos + 1) mod L2, Elem1 ).
+
+
 
 %plateauCheckEnd(+Piles)
+plateauCheckEnd(Piles) :-
+	length(Piles, Length),
+	Length <= 2.
