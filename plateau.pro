@@ -45,6 +45,15 @@ genererPiles(NewPiles) :-
 	print(NewPiles), nl.
 
 
-initPlateau(Piles, Bourse) :-
+plateauInit(Piles, Bourse) :-
 	genererPiles(Piles),
 	Bourse = [].
+
+
+
+
+
+
+%plateauAvancer(+Piles, -NewPiles, +Pos, -NewPos, +Dist, -Elem1, -Elem2)
+
+%plateauCheckEnd(+Piles)
