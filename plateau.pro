@@ -57,10 +57,12 @@ plateauAvancer(Piles, NewPiles, Pos, NewPos, Dist, Elem1, Elem2) :-
 	Dist > 0,
 	Dist =< 3, %end of checks
 	length(Piles, L1),
-	NewPos is ( Pos+Dist ) mod L1,
-	prendrePion( Piles , Piles2  , (NewPos - 1) mod L1, Elem1 ), %mod always return positive numbers
+	NewPos  is (Pos + Dist) mod L1,
+	PosPrendre1 is (NewPos - 1) mod L1,  %mod always return positive numbers
+	prendrePion( Piles , Piles2  , PosPrendre1, Elem1 ),
 	length(Piles2, L2), %A pile could have been removed
-	prendrePion( Piles2, NewPiles, (NewPos + 1) mod L2, Elem2 ).
+	PosPrendre2 is (NewPos + 1) mod L2,
+	prendrePion( Piles2, NewPiles, PosPrendre2, Elem2 ).
 
 
 

@@ -17,12 +17,16 @@ main :-
 	plateauInit(Piles, Bourse, Pos),
 	plateauDisplay(Piles, Bourse, Pos), nl,
 
-
-	decrement(Bourse, sucre, NewBourse),
-	print('Sucre vendu'), nl, nl,
+	emptyList(J1),
 
 
-	plateauDisplay(Piles, NewBourse, Pos).
+	plateauAvancer(Piles, NewPiles, Pos, NewPos, 2, Elem1, Elem2),
+	print('Avancé de 2'), nl, nl,
+	jouer(J1, _ , Bourse, NewBourse, Elem1, Elem2),
+	print('Garde de '), print(Elem1), print(' Vente de '), print(Elem2), nl,
+
+
+	plateauDisplay(NewPiles, NewBourse, NewPos).
 
 
 	/*test(Stocks),
