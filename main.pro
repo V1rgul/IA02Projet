@@ -23,7 +23,7 @@ main :-
 
 	emptyList(J1),
 
-	plateauAvancer(Piles, Piles2, Pos, Pos2, 2, _, _),
+	plateauAvancer(Piles, Piles2, Pos, Pos2, 2, Elem1, Elem2),
 	print('Avance de 2'), nl,
 	printPiles(Piles2, Pos2),
 
@@ -77,10 +77,10 @@ main :-
 
 
 
-	/*jouer(J1, _ , Bourse, NewBourse, Elem1, Elem2),
-	print('Garde de '), print(Elem1), print(', Vente de '), print(Elem2), nl,*/
+	jouer(J1, _ , Bourse, NewBourse, Elem1, Elem2),
+	print('Garde de '), print(Elem1), print(', Vente de '), print(Elem2), nl,
 
-	plateauDisplay(NewPiles, NewBourse, NewPos).
+	plateauDisplay(Piles14, NewBourse, Pos14).
 
 
 	/*test(Stocks),

@@ -56,7 +56,7 @@ decrementIfRemoved(_      , _      , PosPrendre, Pos, Pos   ) :-
 	PosPrendre >= Pos,
 	!. %PosPrendre was after trader pos
 decrementIfRemoved(_     , _       , _         , Pos, NewPos) :-
-	print('A pile was removed before trader pos !'), nl,
+	print('Debug: A pile was removed before trader pos !'), nl,
 	NewPos is Pos-1.
 
 
