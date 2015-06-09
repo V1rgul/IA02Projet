@@ -49,8 +49,15 @@ plateauInit(Piles, Bourse, Pos) :-
 	Pos is 0.
 
 
-
-
+%decrementIfRemoved(+Length1,+Length2,+PosPrendre,+Pos,-NewPos)
+decrementIfRemoved(Length , Length , _         , Pos, Pos   ) :-
+	!. %Nothing was removed
+decrementIfRemoved(_      , _      , PosPrendre, Pos, Pos   ) :-
+	PosPrendre >= Pos,
+	!. %PosPrendre was after trader pos
+decrementIfRemoved(_     , _       , _         , Pos, NewPos) :-
+	print('A pile was removed before trader pos !'), nl,
+	NewPos is Pos-1.
 
 
 %plateauAvancer(+Piles, -NewPiles, +Pos, -NewPos, +Dist, -Elem1, -Elem2)
@@ -58,26 +65,18 @@ plateauAvancer(Piles, NewPiles, Pos, NewPos, Dist, Elem1, Elem2) :-
 	Dist > 0,
 	Dist =< 3, %end of checks
 	length(Piles, L1),
-	NewPos  is (Pos + Dist) mod L1,
-	PosPrendre1 is (NewPos - 1) mod L1,  %mod always return positive numbers
-
-/*	print('Debug Calling prendrePion('), nl,
-	print('Piles:    '), 		print(Piles), 		print(','), nl,
-	print('NewPiles: '), 	print(Piles2), 		print(','), nl,
-	print('Pos:      '), 		print(PosPrendre1),	print(','), nl,
-	print('Elem:     '), 		print(Elem1), 		nl,
-	print(')'), nl,*/
+	Pos2  is (Pos + Dist) mod L1,
+	PosPrendre1 is (Pos2 - 1) mod L1,  %mod always return positive numbers
 	prendrePion( Piles, PosPrendre1, Piles2, Elem1 ),
-/*	print('Debug return from prendrePion('), nl,
-	print('Piles:    '), 		print(Piles), 		print(','), nl,
-	print('NewPiles: '), 	print(Piles2), 		print(','), nl,
-	print('Pos:      '), 		print(PosPrendre1),	print(','), nl,
-	print('Elem:     '), 		print(Elem1), 		nl,
-	print(')'), nl,*/
 
 	length(Piles2, L2), % A pile could have been removed
-	PosPrendre2 is (NewPos + 1) mod L2,
-	prendrePion( Piles2, PosPrendre2, NewPiles, Elem2 ).
+	decrementIfRemoved(L1, L2, PosPrendre1, Pos2, Pos3),
+
+	PosPrendre2 is (Pos3 + 1) mod L2,
+	prendrePion( Piles2, PosPrendre2, NewPiles, Elem2 ),
+
+	length(NewPiles, L3), % A pile could have been removed
+	decrementIfRemoved(L2, L3, PosPrendre2, Pos3, NewPos).
 
 
 
@@ -104,7 +103,8 @@ printPile(Pile) :-
 	nth0(0, Pile, Top),
 	print(Top), print('\t'),
 	length(Pile, Length),
-	printPileStack(Length-1).
+	LengthMinus is Length-1,
+	printPileStack(LengthMinus).
 printPileStack(0) :- !.
 printPileStack(N) :-
 	N2 is N - 1,
