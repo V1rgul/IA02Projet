@@ -83,6 +83,7 @@ plateauAvancer(Piles, NewPiles, Pos, NewPos, Dist, Elem1, Elem2) :-
 %plateauCheckEnd(+Piles)
 plateauCheckEnd(Piles) :-
 	length(Piles, Length),
+	!,
 	Length =< 2.
 
 

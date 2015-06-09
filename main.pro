@@ -30,25 +30,25 @@ main :-
 	print(Elem),
 	print(NewStocks).*/
 
-%getState(-Piles, -Bourse, -Pos) : get the current state of the game
-getState(Piles, Bourse, Pos) :-
+%getState(-Piles, -Bourse, -Trader) : get the current state of the game
+getState(Piles, Bourse, Trader) :-
 	currentPiles(Piles),
 	currentBourse(Bourse),
-	currentPos(Pos).
+	currentPos(Trader).
 
-%setState(+Piles, +Bourse, +Pos) : set the new state of the game
-setState(Piles, Bourse, Pos) :-
+%setState(+Piles, +Bourse, +Trader) : set the new state of the game
+setState(Piles, Bourse, Trader) :-
 	asserta(currentBourse(Bourse)),
 	asserta(currentPiles(Piles)),
-	asserta(currentPos(Pos)).
+	asserta(currentPos(Trader)).
 
 init :-
-	plateauInit(Piles, Bourse, Pos),
-	setState(Piles, Bourse, Pos).
+	plateauInit(Piles, Bourse, Trader),
+	setState(Piles, Bourse, Trader).
 
 displayState :-
-	getState(Piles, Bourse, Pos),
-	plateauDisplay(Piles, Bourse, Pos),
+	getState(Piles, Bourse, Trader),
+	plateauDisplay(Piles, Bourse, Trader),
 	!. %important, cant let choice point here
 
 instructions :-
@@ -76,13 +76,19 @@ do(testAvancer(X)) 	:- !, testAvancer(X).
 do(X) :- print('Unknown command : "'), print(X), print('"'), nl, instructions.
 
 
-done :- fail, !. %%no end check for now
+done :-
+	getState(Piles, _, _),
+	!,
+	%print('Debug Piles: '), print(Piles), nl,
+	plateauCheckEnd(Piles),
+	nl,
+	print('Partie terminee !'), nl.
 
 
 testAvancer(Dist) :-
-	getState(Piles, Bourse, Pos),
+	getState(Piles, Bourse, Trader),
 
-	plateauAvancer(Piles, NewPiles, Pos, NewPos, Dist, Elem1, Elem2),
-	print('Avance de 2, devrait prendre : '), print(Elem1), print(' et '), print(Elem2), nl, 
+	plateauAvancer(Piles, NewPiles, Trader, NewTrader, Dist, Elem1, Elem2),
+	print('Avance de '), print(Dist), print(', pions pris : '), print(Elem1), print(' et '), print(Elem2), nl, 
 
-	setState(NewPiles, Bourse, NewPos).
+	setState(NewPiles, Bourse, NewTrader).
