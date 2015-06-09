@@ -61,23 +61,23 @@ plateauAvancer(Piles, NewPiles, Pos, NewPos, Dist, Elem1, Elem2) :-
 	NewPos  is (Pos + Dist) mod L1,
 	PosPrendre1 is (NewPos - 1) mod L1,  %mod always return positive numbers
 
-	print('Debug Calling prendrePion('), nl,
+/*	print('Debug Calling prendrePion('), nl,
 	print('Piles:    '), 		print(Piles), 		print(','), nl,
 	print('NewPiles: '), 	print(Piles2), 		print(','), nl,
 	print('Pos:      '), 		print(PosPrendre1),	print(','), nl,
 	print('Elem:     '), 		print(Elem1), 		nl,
-	print(')'), nl,
-	prendrePion( Piles , Piles2  , PosPrendre1, Elem1 ),
-	print('Debug return from prendrePion('), nl,
+	print(')'), nl,*/
+	prendrePion( Piles, PosPrendre1, Piles2, Elem1 ),
+/*	print('Debug return from prendrePion('), nl,
 	print('Piles:    '), 		print(Piles), 		print(','), nl,
 	print('NewPiles: '), 	print(Piles2), 		print(','), nl,
 	print('Pos:      '), 		print(PosPrendre1),	print(','), nl,
 	print('Elem:     '), 		print(Elem1), 		nl,
-	print(')'), nl
+	print(')'), nl,*/
 
 	length(Piles2, L2), % A pile could have been removed
 	PosPrendre2 is (NewPos + 1) mod L2,
-	prendrePion( Piles2, NewPiles, PosPrendre2, Elem2 ).
+	prendrePion( Piles2, PosPrendre2, NewPiles, Elem2 ).
 
 
 

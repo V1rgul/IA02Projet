@@ -40,6 +40,8 @@ decrementValue(Name        , Value, _           , Elem) :-
 %	+List:		[[ble,1]]
 %	+Elem:		sucre
 %	-NewList:	[[sucre,1],[ble,1]]
+incremente(Liste, ElemToAdd, NewList) :-
+	!.
 
 %prendrePion(+Piles,+Pos,-NewPiles,-Elem)
 %	Exemple:

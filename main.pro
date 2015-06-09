@@ -34,8 +34,8 @@ main :-
 
 
 	/*test(Stocks),
-	afficherBourse(Stocks),
-	prendrePion(Stocks, 1, NewStocks, Elem),
-	write(Elem),
-	afficherBourse(NewStocks).*/
+	print(Stocks),
+	prendrePion(Stocks, 2, NewStocks, Elem),
+	print(Elem),
+	print(NewStocks).*/
 
