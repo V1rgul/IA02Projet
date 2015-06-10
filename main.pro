@@ -2,33 +2,17 @@
 :- include('plateau.pro').
 :- include('joueur.pro').
 
-
-
-test([[sucre,riz,ble],[cacao,cafe],[mais]]).
-
 spy.
 
 main :-
-
 	init,
 	print('Welcome !'), nl,
 	instructions,
 	go.
 
-/*	plateauDisplay(Piles, Bourse, Pos), nl,
-
-	emptyList(J1),
-
-	jouer(J1, _ , Bourse, NewBourse, Elem1, Elem2),
-	print('Garde de '), print(Elem1), print(', Vente de '), print(Elem2), nl,
-
-	plateauDisplay(Piles14, NewBourse, Pos14).
-
-	/*test(Stocks),
-	print(Stocks),
-	prendrePion(Stocks, 2, NewStocks, Elem),
-	print(Elem),
-	print(NewStocks).*/
+init :-
+	plateauInit(Piles, Bourse, Trader),
+	setState(Piles, Bourse, Trader).
 
 %getState(-Piles, -Bourse, -Trader) : get the current state of the game
 getState(Piles, Bourse, Trader) :-
@@ -41,10 +25,6 @@ setState(Piles, Bourse, Trader) :-
 	asserta(currentBourse(Bourse)),
 	asserta(currentPiles(Piles)),
 	asserta(currentPos(Trader)).
-
-init :-
-	plateauInit(Piles, Bourse, Trader),
-	setState(Piles, Bourse, Trader).
 
 displayState :-
 	getState(Piles, Bourse, Trader),
@@ -92,3 +72,26 @@ testAvancer(Dist) :-
 	print('Avance de '), print(Dist), print(', pions pris : '), print(Elem1), print(' et '), print(Elem2), nl, 
 
 	setState(NewPiles, Bourse, NewTrader).
+
+
+
+
+
+/*TEST*/
+
+test([[sucre,riz,ble],[cacao,cafe],[mais]]).
+bourse([[ble,7],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
+
+test_stuff :-
+/*	plateauDisplay(Piles, Bourse, Pos), nl,
+
+	emptyList(J1),
+
+	jouer(J1, _ , Bourse, NewBourse, Elem1, Elem2),
+	print('Garde de '), print(Elem1), print(', Vente de '), print(Elem2), nl,
+
+	plateauDisplay(Piles14, NewBourse, Pos14).*/
+	bourse(Stocks),
+	print(Stocks),
+	increment(Stocks, sucre, NewStocks),
+	print(NewStocks).

@@ -1,8 +1,11 @@
 bourse(				[[ble,7],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
 marchandisesDepart(	[[ble,6],[riz,6],[cacao,6],[cafe,2],[sucre,2],[mais,1]]).
 
-
-
+%plateauInit(-Piles, -Bourse, -Pos)
+plateauInit(Piles, Bourse, Pos) :-
+	genererPiles(Piles),
+	bourse(Bourse),
+	Pos is 0.
 
 genererPile(Marchandises, NewPile, NewMarchandises) :-
 	emptyList(Pile),
@@ -41,13 +44,6 @@ genererPiles(NewPiles) :-
 	append(Piles7, [P8], Piles8),
 	append(Piles8, [P9], NewPiles),
 	!.
-
-%plateauInit(-Piles, -Bourse, -Pos)
-plateauInit(Piles, Bourse, Pos) :-
-	genererPiles(Piles),
-	bourse(Bourse),
-	Pos is 0.
-
 
 %decrementIfRemoved(+Length1,+Length2,+PosPrendre,+Pos,-NewPos)
 decrementIfRemoved(Length , Length , _         , Pos, Pos   ) :-

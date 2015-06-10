@@ -40,8 +40,19 @@ decrementValue(Name        , Value, _           , Elem) :-
 %	+List:		[[ble,1]]
 %	+Elem:		sucre
 %	-NewList:	[[sucre,1],[ble,1]]
-increment(Liste, ElemToAdd, NewList) :-
-	!.
+increment([]   , _           , []     ) :- !.
+increment([T|Q], SearchedName, NewList) :-
+	[Name, Value] = T,
+	incrementValue(Name, Value, SearchedName, DecrementedElem),
+	increment(Q, SearchedName, NewListRec),
+	append(DecrementedElem, NewListRec, NewList).
+
+%decrementValue(+Name, +Value, +SearchedName, -Elem)
+incrementValue(SearchedName, Value, SearchedName, Elem) :-
+	ValueTemp is Value+1,
+	Elem = [[SearchedName, ValueTemp]].
+incrementValue(Name        , Value, _           , Elem) :-
+	Elem = [[Name, Value]].
 
 %prendrePion(+Piles,+Pos,-NewPiles,-Elem)
 %	Exemple:
