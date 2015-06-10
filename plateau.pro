@@ -112,7 +112,6 @@ printPileStack(N) :-
 
 %plateauDisplay(+Bourse, +Piles, +Pos)
 plateauDisplay(Piles,Bourse,Pos) :-
-	
 	print('Etat du jeu :'), nl, 
 	inverseKV(Bourse, InvertedBourse),
 	msort(InvertedBourse, BourseTriee),

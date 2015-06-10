@@ -1,6 +1,5 @@
-
-
 emptyList([]).
+
 
 appendNonEmptyA([[]], B,  C) :-
 	C = B.
@@ -23,13 +22,12 @@ decrement([T|Q], SearchedName, NewList) :-
 	decrementValue(Name, Value, SearchedName, DecrementedElem),
 	decrement(Q, SearchedName, NewListRec),
 	append(DecrementedElem, NewListRec, NewList).
-
-%decrementValue(+Name, +Value, +SearchedName, -Elem)
 decrementValue(SearchedName, Value, SearchedName, Elem) :-
 	ValueTemp is Value-1,
 	Elem = [[SearchedName, ValueTemp]].
 decrementValue(Name        , Value, _           , Elem) :-
 	Elem = [[Name, Value]].
+
 
 %increment(+List,+Elem,-NewList)
 %	Exemple:
@@ -43,16 +41,15 @@ decrementValue(Name        , Value, _           , Elem) :-
 increment([]   , _           , []     ) :- !.
 increment([T|Q], SearchedName, NewList) :-
 	[Name, Value] = T,
-	incrementValue(Name, Value, SearchedName, DecrementedElem),
+	incrementValue(Name, Value, SearchedName, IncrementedElem),
 	increment(Q, SearchedName, NewListRec),
-	append(DecrementedElem, NewListRec, NewList).
-
-%decrementValue(+Name, +Value, +SearchedName, -Elem)
+	append(IncrementedElem, NewListRec, NewList).
 incrementValue(SearchedName, Value, SearchedName, Elem) :-
 	ValueTemp is Value+1,
 	Elem = [[SearchedName, ValueTemp]].
 incrementValue(Name        , Value, _           , Elem) :-
 	Elem = [[Name, Value]].
+
 
 %prendrePion(+Piles,+Pos,-NewPiles,-Elem)
 %	Exemple:

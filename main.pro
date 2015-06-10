@@ -65,7 +65,14 @@ done :-
 	print('Partie terminee !'), nl.
 
 
+testAvancer(1) :-
+	avancer(1).
+testAvancer(2) :-
+	avancer(2).
 testAvancer(Dist) :-
+	print('Error: You can only move for one or two step at once.'), n1.
+
+avancer(Dist) :-
 	getState(Piles, Bourse, Trader),
 
 	plateauAvancer(Piles, NewPiles, Trader, NewTrader, Dist, Elem1, Elem2),
