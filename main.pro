@@ -96,7 +96,9 @@ avancer(Dist, Prendre) :-
 	jouer(Player, NewPlayer, Bourse, NewBourse, Elems, Prendre), 
 	setPlayer(Joueurs, NewJoueurs, JoueurCourant, NewPlayer),
 
-	setState(NewPiles, NewBourse, NewTrader, NewJoueurs, JoueurCourant),
+	nextPlayer(Joueurs, JoueurCourant, NewJoueurCourant),
+
+	setState(NewPiles, NewBourse, NewTrader, NewJoueurs, NewJoueurCourant),
 	!.
 
 

@@ -38,6 +38,10 @@ playerIsIA(Player) :-
 	getPlayerType(Player, Type),
 	Type == joueurIA.
 
+%nextPlayer(+Players,+Index,-NewIndex)
+nextPlayer( Players, Index, NewIndex) :-
+	length(Players, Length),
+	NewIndex is (Index+1) mod Length.
  
 otherElem(0, 1) :- !.
 otherElem(1, 0) :- !.
