@@ -1,5 +1,5 @@
 bourse(				[[ble,7],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
-marchandisesDepart(	[[ble,6],[riz,6],[cacao,6],[cafe,2],[sucre,2],[mais,1]]).
+marchandisesDepart(	[[ble,6],[riz,6],[cacao,6],[cafe,100],[sucre,6],[mais,6]]).
 
 %plateauInit(-Piles, -Bourse, -Pos)
 plateauInit(Piles, Bourse, Pos) :-
@@ -12,11 +12,12 @@ genererPile(Marchandises, NewPile, NewMarchandises) :-
 	randomElem(Marchandises , E1),
 	decrement(Marchandises , E1, Marchandises2), %needs to be in this order to avoid selected unavailable products
 	randomElem(Marchandises2, E2),
-	decrement(Marchandises , E2, Marchandises3),
+	decrement(Marchandises2 , E2, Marchandises3),
 	randomElem(Marchandises3, E3),
-	decrement(Marchandises , E3, Marchandises4),
+	decrement(Marchandises3 , E3, Marchandises4),
 	randomElem(Marchandises4, E4),
-	decrement(Marchandises , E4, NewMarchandises),
+	decrement(Marchandises4 , E4, NewMarchandises),
+	print(NewMarchandises), nl,
 	append(Pile , [E1], Pile2),
 	append(Pile2, [E2], Pile3),
 	append(Pile3, [E3], Pile4),

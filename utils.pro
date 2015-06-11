@@ -6,6 +6,11 @@ appendNonEmptyA([[]], B,  C) :-
 appendNonEmptyA(A, B, C) :-
 	append(A, B, C).
 
+appendNonEmptyA([], B,  C) :-
+	C = B.
+appendNonEmptyA(A, B, C) :-
+	append(A, B, C).
+
 
 %decrement(+List,+SearchedName,-NewList)
 %	Exemple:
@@ -102,10 +107,20 @@ private_replace([T|Q], Pos, RemplaceBy, Index, NewListe) :-
 %	+List:		[[sucre,3],[ble,1]]
 %	-Elem:		ble
 randomElem(Liste, Element) :-
-    length(Liste, Size),
-    random(0, Size, Index),
+	privateRandomElem(Liste, Element, 0, ReturnElem).
+privateRandomElem(Liste, Element, 0, ReturnElem) :-
+	length(Liste, Size),
+	TempSize is Size-1,
+    random(0, TempSize, Index),
     nth0(Index, Liste, ElementValue),
-    nth0(0, ElementValue, Element).
+    nth0(0, ElementValue, TempElement),
+    nth0(1, ElementValue, Value),
+    !,
+	privateRandomElem(Liste, Element, Value,TempElement).
+privateRandomElem(_, Element, Value, TempElement) :- 
+	Element = TempElement,
+	!.
+	
 
 
 	

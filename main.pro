@@ -43,7 +43,7 @@ setState(Piles, Bourse, Trader, Joueurs, JoueurCourant) :-
 displayState :-
 	getState(Piles, Bourse, Trader, _, JoueurCourant),
 	plateauDisplay(Piles, Bourse, Trader),
-	print('Tour de Joueur n°'), print(JoueurCourant), nl,
+	print('Tour de Joueur numero: '), print(JoueurCourant), nl,
 	!. %important, cant let choice point here
 
 instructions :-
@@ -99,7 +99,8 @@ avancer(Dist, Prendre) :-
 	setState(NewPiles, NewBourse, NewTrader, NewJoueurs, JoueurCourant),
 	!.
 
-
+avancerIA :-
+	getState(Piles, Bourse, Trader, Joueurs, JoueurCourant).
 
 
 
@@ -108,7 +109,8 @@ avancer(Dist, Prendre) :-
 test([[sucre,riz,ble],[cacao,cafe],[mais]]).
 
 
-%bourse([[ble,7],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
+test_bourse([[ble,7],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
+af([1,2,3]).
 
 
 test_stuff :-
@@ -120,7 +122,7 @@ test_stuff :-
 	print('Garde de '), print(Elem1), print(', Vente de '), print(Elem2), nl,
 
 	plateauDisplay(Piles14, NewBourse, Pos14).*/
-	test(Stocks),
+	test_bourse(Stocks),
 	print(Stocks),
-	replace(Stocks, 2, sucre, NewStocks),
+	increment(Stocks, rien, NewStocks),
 	print(NewStocks).
