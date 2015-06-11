@@ -2,17 +2,29 @@
 %Reserve, correspond a un joueur : [[sucre,3],[ble,1]]
 
 
+createPlayerHuman([joueurHumain, [[ble,0],[riz,0],[cacao,0],[cafe,0],[sucre,0],[mais,0]] ]).
+createPlayerIA(   [joueurIA,     [[ble,0],[riz,0],[cacao,0],[cafe,0],[sucre,0],[mais,0]] ]).
 
-
-createPlayerHuman([joueurHumain, []]).
-createPlayerIA(   [joueurIA,     []]).
-
-createPlayers(0, []) :- !.
-createPlayers(Nombre, Players) :-
+createPlayersIA(0, []) :- !.
+createPlayersIA(Nombre, Players) :-
 	NewNombre is Nombre-1,
-	createPlayers(NewNombre, NewPlayers),
+	createPlayersIA(NewNombre, NewPlayers),
+	createPlayerIA(NewP),
+	append(NewPlayers, [NewP], Players).
+
+createPlayersHuman(0, []) :- !.
+createPlayersHuman(Nombre, Players) :-
+	NewNombre is Nombre-1,
+	createPlayersHuman(NewNombre, NewPlayers),
 	createPlayerHuman(NewP),
 	append(NewPlayers, [NewP], Players).
+
+createPlayers(NHumans, NIAs, Players) :-
+	createPlayersHuman(NHumans, Humans),
+	createPlayersIA(   NIAs,    IAs),
+	append(Humans, IAs, Players),
+	print('Created '), print(NHumans), print(' Humans and '), print(NIAs), print(' IAs :'), nl,
+	print(Players), nl.
 
 %getPlayer(+Players,+Index,-Player)
 getPlayer(Players, Index, Player) :-
@@ -20,7 +32,9 @@ getPlayer(Players, Index, Player) :-
 
 %setPlayer(+Players,-NewPlayers,+Index,+Player)
 setPlayer(Players, NewPlayers, Index, Player) :-
-	replace(Players, Index, Player, NewPlayers).
+	print('Debug setPlayer '), print(Index), print(Players), nl,
+	replace(Players, Index, Player, NewPlayers),
+	print('Debug setPlayer A'), print(NewPlayers), nl.
 
 getPlayerReserve(Player, Reserve) :-
 	nth0(1, Player, Reserve).
@@ -40,6 +54,10 @@ playerIsIA(Player) :-
 	getPlayerType(Player, Type),
 	Type == joueurIA.
 
+%nextPlayer(+Players,+Index,-NewIndex)
+nextPlayer( Players, Index, NewIndex) :-
+	length(Players, Length),
+	NewIndex is (Index+1) mod Length.
  
 otherElem(0, 1) :- !.
 otherElem(1, 0) :- !.
@@ -52,4 +70,5 @@ jouer(Player, NewPlayer, Bourse, NewBourse, Elems, Prendre) :-
 	getPlayerReserve(Player, Reserve),
 	increment(Reserve, ElemGarde, NewReserve),
 	setPlayerReserve(Player, NewReserve, NewPlayer),
+	print('Debug NewPlayer '), print(NewPlayer), nl, 
 	decrement(Bourse, ElemVendre, NewBourse).
