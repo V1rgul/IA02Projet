@@ -4,31 +4,46 @@
 
 spy.
 
-main :-
-	init,
+
+main(JoueursHumains) :-
+	JoueursHumains >= 0,
+	JoueursHumains =< 2,
+	!,
+	init(JoueursHumains),
 	print('Welcome !'), nl,
 	instructions,
 	go.
 
-init :-
-	plateauInit(Piles, Bourse, Trader),
-	setState(Piles, Bourse, Trader).
+main(_             ) :-
+	print('Le nombre de joueurs humains doit etre entre 0 et 2'),
+	!.
 
-%getState(-Piles, -Bourse, -Trader) : get the current state of the game
-getState(Piles, Bourse, Trader) :-
+init(JoueursHumains) :-
+	plateauInit(Piles, Bourse, Trader),
+	spy,
+	createPlayers(JoueursHumains, Players),
+	setState(Piles, Bourse, Trader, Players, 0).
+
+%getState(-Piles, -Bourse, -Trader, -Joueurs, -JoueurCourant) : get the current state of the game
+getState(Piles, Bourse, Trader, Joueurs, JoueurCourant) :-
 	currentPiles(Piles),
 	currentBourse(Bourse),
-	currentPos(Trader).
+	currentPos(Trader),
+	currentJoueurs(Joueurs),
+	currentJoueur(JoueurCourant).
 
-%setState(+Piles, +Bourse, +Trader) : set the new state of the game
-setState(Piles, Bourse, Trader) :-
+%setState(+Piles, +Bourse, +Trader, +Joueurs, +JoueurCourant) : set the new state of the game
+setState(Piles, Bourse, Trader, Joueurs, JoueurCourant) :-
 	asserta(currentBourse(Bourse)),
 	asserta(currentPiles(Piles)),
-	asserta(currentPos(Trader)).
+	asserta(currentPos(Trader)),
+	asserta(currentJoueurs(Joueurs)),
+	asserta(currentJoueur(JoueurCourant)).
 
 displayState :-
-	getState(Piles, Bourse, Trader),
+	getState(Piles, Bourse, Trader, _, JoueurCourant),
 	plateauDisplay(Piles, Bourse, Trader),
+	print('Tour de Joueur n°'), print(JoueurCourant), nl,
 	!. %important, cant let choice point here
 
 instructions :-
@@ -53,11 +68,15 @@ go :- print(' Exit ! '), nl.
 do(help) 			:- !, instructions.
 do(quit) 			:- !.
 do(testAvancer(X)) 	:- !, testAvancer(X).
+do(avance1_AV) :- !, avancer(1, 0).
+do(avance1_VA) :- !, avancer(1, 1).
+do(avance2_AV) :- !, avancer(2, 0).
+do(avance2_VA) :- !, avancer(2, 1).
 do(X) :- print('Unknown command : "'), print(X), print('"'), nl, instructions.
 
 
 done :-
-	getState(Piles, _, _),
+	getState(Piles, _, _, _, _),
 	!,
 	%print('Debug Piles: '), print(Piles), nl,
 	plateauCheckEnd(Piles),
@@ -65,20 +84,14 @@ done :-
 	print('Partie terminee !'), nl.
 
 
-testAvancer(1) :-
-	avancer(1).
-testAvancer(2) :-
-	avancer(2).
-testAvancer(_) :-
-	print('Error: You can only move for one or two step at once.'), nl.
 
-avancer(Dist) :-
-	getState(Piles, Bourse, Trader),
+avancer(Dist, Prendre) :-
+	getState(Piles, Bourse, Trader, Joueurs, JoueurCourant),
 
-	plateauAvancer(Piles, NewPiles, Trader, NewTrader, Dist, Elem1, Elem2),
-	print('Avance de '), print(Dist), print(', pions pris : '), print(Elem1), print(' et '), print(Elem2), nl, 
+	plateauAvancer(Piles, NewPiles, Trader, NewTrader, Dist, Elems),
+	print('Avance de '), print(Dist), print(', pions pris : '), print(Elems), nl, 
 
-	setState(NewPiles, Bourse, NewTrader).
+	setState(NewPiles, Bourse, NewTrader, Joueurs, JoueurCourant).
 
 
 
@@ -87,8 +100,11 @@ avancer(Dist) :-
 /*TEST*/
 
 test([[sucre,riz,ble],[cacao,cafe],[mais]]).
-/*bourse([[ble,7],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
-*/
+
+
+%bourse([[ble,7],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
+
+
 test_stuff :-
 /*	plateauDisplay(Piles, Bourse, Pos), nl,s
 

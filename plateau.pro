@@ -56,20 +56,24 @@ decrementIfRemoved(_     , _       , _         , Pos, NewPos) :-
 	NewPos is Pos-1.
 
 
-%plateauAvancer(+Piles, -NewPiles, +Pos, -NewPos, +Dist, -Elem1, -Elem2)
-plateauAvancer(Piles, NewPiles, Pos, NewPos, Dist, Elem1, Elem2) :-
+%plateauAvancer(+Piles, -NewPiles, +Pos, -NewPos, +Dist, -Elems)
+%Elems is an array containing the 2 taken elements
+plateauAvancer(Piles, NewPiles, Pos, NewPos, Dist, Elems) :-
 	Dist > 0,
 	Dist =< 3, %end of checks
+	emptyList(Elems1),
 	length(Piles, L1),
 	Pos2  is (Pos + Dist) mod L1,
 	PosPrendre1 is (Pos2 - 1) mod L1,  %mod always return positive numbers
 	prendrePion( Piles, PosPrendre1, Piles2, Elem1 ),
+	append(Elems1, Elem1, Elems2),
 
 	length(Piles2, L2), % A pile could have been removed
 	decrementIfRemoved(L1, L2, PosPrendre1, Pos2, Pos3),
 
 	PosPrendre2 is (Pos3 + 1) mod L2,
 	prendrePion( Piles2, PosPrendre2, NewPiles, Elem2 ),
+	append(Elems2, Elem2, Elems),
 
 	length(NewPiles, L3), % A pile could have been removed
 	decrementIfRemoved(L2, L3, PosPrendre2, Pos3, NewPos).
