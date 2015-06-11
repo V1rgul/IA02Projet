@@ -73,7 +73,18 @@ prendrePion([T|Q], Pos, NewPiles, ElemToRemove) :-
 	prendrePion(Q, TempPos, TempNewPiles, ElemToRemove),
 	append([T], TempNewPiles, NewPiles).
 
-
+%randomElem(+Liste +Pos, +RemplaceBy, -NewListe)
+%	Exemple:
+%	+List:			[sucre, ble, rien]
+%	+Pos: 			0
+%	+RemplaceBy:	stuff
+%	-NewListe: 		[stuff, ble, rien]
+%	----------------------------------------
+%	Exemple:
+%	+List:			[[sucre,3],[ble,1]]
+%	+Pos: 			1
+%	+RemplaceBy:	[ble, 0]
+%	-NewListe: 		[[sucre,3],[ble,0]]
 replace([T|Q], Pos, RemplaceBy, NewListe) :-
 	private_replace([T|Q], Pos, RemplaceBy, 0, NewListe).
 private_replace([], _	, _	, _, []) :- !.
