@@ -109,10 +109,6 @@ avancer(Dist, Prendre) :-
 	!.
 
 
-avancerIA :-
-	getState(Piles, Bourse, Trader, Joueurs, JoueurCourant).
-
-
 stock :-
 	getState(_, _, _, Joueurs, JoueurCourant),
 	getPlayer(Joueurs, JoueurCourant, Player),

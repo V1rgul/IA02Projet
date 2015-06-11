@@ -107,17 +107,16 @@ private_replace([T|Q], Pos, RemplaceBy, Index, NewListe) :-
 %	+List:		[[sucre,3],[ble,1]]
 %	-Elem:		ble
 randomElem(Liste, Element) :-
-	privateRandomElem(Liste, Element, 0, ReturnElem).
-privateRandomElem(Liste, Element, 0, ReturnElem) :-
+	privateRandomElem(Liste, Element, 0, _).
+privateRandomElem(Liste, Element, 0, _) :-
 	length(Liste, Size),
-	TempSize is Size-1,
-    random(0, TempSize, Index),
+    random(0, Size, Index),
     nth0(Index, Liste, ElementValue),
     nth0(0, ElementValue, TempElement),
     nth0(1, ElementValue, Value),
     !,
 	privateRandomElem(Liste, Element, Value,TempElement).
-privateRandomElem(_, Element, Value, TempElement) :- 
+privateRandomElem(_, Element, _, TempElement) :- 
 	Element = TempElement,
 	!.
 	

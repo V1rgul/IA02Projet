@@ -1,5 +1,5 @@
 bourse(				[[ble,7],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
-marchandisesDepart(	[[ble,6],[riz,6],[cacao,6],[cafe,100],[sucre,6],[mais,6]]).
+marchandisesDepart(	[[ble,6],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
 
 %plateauInit(-Piles, -Bourse, -Pos)
 plateauInit(Piles, Bourse, Pos) :-
@@ -17,7 +17,6 @@ genererPile(Marchandises, NewPile, NewMarchandises) :-
 	decrement(Marchandises3 , E3, Marchandises4),
 	randomElem(Marchandises4, E4),
 	decrement(Marchandises4 , E4, NewMarchandises),
-	print(NewMarchandises), nl,
 	append(Pile , [E1], Pile2),
 	append(Pile2, [E2], Pile3),
 	append(Pile3, [E3], Pile4),
