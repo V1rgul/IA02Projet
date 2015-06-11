@@ -1,5 +1,5 @@
 bourse(				[[ble,7],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
-marchandisesDepart(	[[ble,6],[riz,6],[cacao,6],[cafe,2],[sucre,2],[mais,1]]).
+marchandisesDepart(	[[ble,6],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
 
 %plateauInit(-Piles, -Bourse, -Pos)
 plateauInit(Piles, Bourse, Pos) :-
