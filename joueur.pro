@@ -22,6 +22,12 @@ getPlayer(Players, Index, Player) :-
 setPlayer(Players, NewPlayers, Index, Player) :-
 	replace(Players, Index, Player, NewPlayers).
 
+getPlayerReserve(Player, Reserve) :-
+	nth0(1, Player, Reserve).
+
+setPlayerReserve(Player, Reserve, NewPlayer) :-
+	replace(Player, 1, Reserve, NewPlayer).
+
 
 getPlayerType(Player, Type) :-
 	nth0(0, Player, Type).
@@ -35,8 +41,15 @@ playerIsIA(Player) :-
 	Type == joueurIA.
 
  
+otherElem(0, 1) :- !.
+otherElem(1, 0) :- !.
 
 %jouer(+Reserve, -NewReserve, +Bourse, -NewBourse, +ElemGarde, +ElemVendre)
-jouer(Reserve, NewReserve, Bourse, NewBourse, ElemGarde, ElemVendre) :-
+jouer(Player, NewPlayer, Bourse, NewBourse, Elems, Prendre) :-
+	nth0(Prendre, Elems, ElemGarde),
+	otherElem(Prendre, Vendre),
+	nth0(Vendre, Elems, ElemVendre),
+	getPlayerReserve(Player, Reserve),
 	increment(Reserve, ElemGarde, NewReserve),
+	setPlayerReserve(Player, NewReserve, NewPlayer),
 	decrement(Bourse, ElemVendre, NewBourse).

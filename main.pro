@@ -85,13 +85,19 @@ done :-
 
 
 
+
 avancer(Dist, Prendre) :-
 	getState(Piles, Bourse, Trader, Joueurs, JoueurCourant),
 
 	plateauAvancer(Piles, NewPiles, Trader, NewTrader, Dist, Elems),
-	print('Avance de '), print(Dist), print(', pions pris : '), print(Elems), nl, 
+	print('Avance de '), print(Dist), print(', pions pris : '), print(Elems), nl,
 
-	setState(NewPiles, Bourse, NewTrader, Joueurs, JoueurCourant).
+	getPlayer(Joueurs, JoueurCourant, Player),
+	jouer(Player, NewPlayer, Bourse, NewBourse, Elems, Prendre), 
+	setPlayer(Joueurs, NewJoueurs, JoueurCourant, NewPlayer),
+
+	setState(NewPiles, NewBourse, NewTrader, NewJoueurs, JoueurCourant),
+	!.
 
 
 

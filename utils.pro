@@ -73,7 +73,7 @@ prendrePion([T|Q], Pos, NewPiles, ElemToRemove) :-
 	prendrePion(Q, TempPos, TempNewPiles, ElemToRemove),
 	append([T], TempNewPiles, NewPiles).
 
-%randomElem(+Liste +Pos, +RemplaceBy, -NewListe)
+%replace(+Liste +Pos, +RemplaceBy, -NewListe)
 %	Exemple:
 %	+List:			[sucre, ble, rien]
 %	+Pos: 			0
