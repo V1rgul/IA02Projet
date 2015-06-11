@@ -95,7 +95,7 @@ replace([T|Q], Pos, RemplaceBy, NewListe) :-
 private_replace([], _	, _	, _, []) :- !.
 private_replace([_|Q], SamePos, RemplaceBy, SamePos, NewListe) :-
 	TempSamePos is SamePos+1,
-	private_replace(Q, TempSamePos, RemplaceBy, SamePos, TempListe),
+	private_replace(Q, SamePos, RemplaceBy, TempSamePos, TempListe),
 	append([RemplaceBy], TempListe, NewListe).
 private_replace([T|Q], Pos, RemplaceBy, Index, NewListe) :-
 	TempIndex is Index+1,

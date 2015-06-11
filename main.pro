@@ -135,7 +135,7 @@ test_stuff :-
 	print('Garde de '), print(Elem1), print(', Vente de '), print(Elem2), nl,
 
 	plateauDisplay(Piles14, NewBourse, Pos14).*/
-	test_bourse(Stocks),
+	test(Stocks),
 	print(Stocks),
-	increment(Stocks, rien, NewStocks),
+	replace(Stocks, 0, rien, NewStocks),
 	print(NewStocks).
