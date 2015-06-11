@@ -69,8 +69,8 @@ testAvancer(1) :-
 	avancer(1).
 testAvancer(2) :-
 	avancer(2).
-testAvancer(Dist) :-
-	print('Error: You can only move for one or two step at once.'), n1.
+testAvancer(_) :-
+	print('Error: You can only move for one or two step at once.'), nl.
 
 avancer(Dist) :-
 	getState(Piles, Bourse, Trader),
@@ -87,10 +87,10 @@ avancer(Dist) :-
 /*TEST*/
 
 test([[sucre,riz,ble],[cacao,cafe],[mais]]).
-bourse([[ble,7],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
-
+/*bourse([[ble,7],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
+*/
 test_stuff :-
-/*	plateauDisplay(Piles, Bourse, Pos), nl,
+/*	plateauDisplay(Piles, Bourse, Pos), nl,s
 
 	emptyList(J1),
 
@@ -98,7 +98,7 @@ test_stuff :-
 	print('Garde de '), print(Elem1), print(', Vente de '), print(Elem2), nl,
 
 	plateauDisplay(Piles14, NewBourse, Pos14).*/
-	bourse(Stocks),
+	test(Stocks),
 	print(Stocks),
-	increment(Stocks, sucre, NewStocks),
+	replace(Stocks, 2, sucre, NewStocks),
 	print(NewStocks).

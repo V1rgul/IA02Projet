@@ -62,8 +62,7 @@ incrementValue(Name        , Value, _           , Elem) :-
 %	-NewPile	[[sucre,riz,ble],[cacao,cafe]]
 %	+Pos:		2
 %	-Elem:		mais
-prendrePion([], Pos, [], ElemToRemove) :-
-	!.
+prendrePion([], _, [], _) :- !.
 prendrePion([T|Q], 0, NewPiles, ElemToRemove) :-
 	[Elem|Others] = T,
 	ElemToRemove = Elem,
@@ -74,6 +73,18 @@ prendrePion([T|Q], Pos, NewPiles, ElemToRemove) :-
 	prendrePion(Q, TempPos, TempNewPiles, ElemToRemove),
 	append([T], TempNewPiles, NewPiles).
 
+
+replace([T|Q], Pos, RemplaceBy, NewListe) :-
+	private_replace([T|Q], Pos, RemplaceBy, 0, NewListe).
+private_replace([], _	, _	, _, []) :- !.
+private_replace([_|Q], SamePos, RemplaceBy, SamePos, NewListe) :-
+	TempSamePos is SamePos+1,
+	private_replace(Q, TempSamePos, RemplaceBy, SamePos, TempListe),
+	append([RemplaceBy], TempListe, NewListe).
+private_replace([T|Q], Pos, RemplaceBy, Index, NewListe) :-
+	TempIndex is Index+1,
+	private_replace(Q, Pos, RemplaceBy, TempIndex, TempListe),
+	append([T], TempListe, NewListe).
 
 %randomElem(+Liste, -Element)
 %	Exemple:
