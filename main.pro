@@ -5,23 +5,27 @@
 spy.
 
 
-main(JoueursHumains) :-
+main(JoueursHumains, JoueursIA) :-
 	JoueursHumains >= 0,
-	JoueursHumains =< 2,
+	JoueursHumains =< 4,
+	JoueursIA >= 0,
+	JoueursIA =< 4,
+	JoueursSomme is JoueursHumains + JoueursIA,
+	JoueursSomme =< 4,
 	!,
-	init(JoueursHumains),
+	init(JoueursHumains, JoueursIA),
 	print('Welcome !'), nl,
 	instructions,
 	go.
 
-main(_             ) :-
-	print('Le nombre de joueurs humains doit etre entre 0 et 2'),
+main(_             , _        ) :-
+	print('Le nombre de joueurs humains et IA doit etre entre 0 et 4, et la somme des 2 inferieure a 4'),
 	!.
 
-init(JoueursHumains) :-
+init(JoueursHumains, JoueursIA) :-
 	plateauInit(Piles, Bourse, Trader),
 	spy,
-	createPlayers(JoueursHumains, Players),
+	createPlayers(JoueursHumains, JoueursIA, Players),
 	setState(Piles, Bourse, Trader, Players, 0).
 
 %getState(-Piles, -Bourse, -Trader, -Joueurs, -JoueurCourant) : get the current state of the game
@@ -41,9 +45,11 @@ setState(Piles, Bourse, Trader, Joueurs, JoueurCourant) :-
 	asserta(currentJoueur(JoueurCourant)).
 
 displayState :-
-	getState(Piles, Bourse, Trader, _, JoueurCourant),
+	getState(Piles, Bourse, Trader, Joueurs, JoueurCourant),
 	plateauDisplay(Piles, Bourse, Trader),
-	print('Tour de Joueur n°'), print(JoueurCourant), nl,
+	getPlayer(Joueurs, JoueurCourant, Joueur),
+	getPlayerType(Joueur, Type),
+	print('Tour de '), print(Type), print(' numero '), print(JoueurCourant), nl,
 	!. %important, cant let choice point here
 
 instructions :-
@@ -93,6 +99,7 @@ avancer(Dist, Prendre) :-
 	print('Avance de '), print(Dist), print(', pions pris : '), print(Elems), nl,
 
 	getPlayer(Joueurs, JoueurCourant, Player),
+	print('Debug Selected Player : '), print(Player), nl,
 	jouer(Player, NewPlayer, Bourse, NewBourse, Elems, Prendre), 
 	setPlayer(Joueurs, NewJoueurs, JoueurCourant, NewPlayer),
 
