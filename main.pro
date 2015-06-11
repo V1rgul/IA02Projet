@@ -49,9 +49,9 @@ displayState :-
 instructions :-
 	nl,
 	print('Enter commands at the prompt as Prolog terms, ending in period:'), nl,
-	print('  help. - this information.'), nl,
-	print('  quit. - exit the game.'), nl,
-	print('  testAvancer(Dist). '), nl,
+	print('  help. \t- this information.'), nl,
+	print('  quit. \t- exit the game.'), nl,
+	print('  stock.\t- show your current stocks'), nl,
 	nl.
 
 go :- done.
@@ -65,13 +65,13 @@ go :-
 go :- print(' Exit ! '), nl.
 
 
-do(help) 			:- !, instructions.
-do(quit) 			:- !.
-do(testAvancer(X)) 	:- !, testAvancer(X).
-do(avance1_AV) :- !, avancer(1, 0).
-do(avance1_VA) :- !, avancer(1, 1).
-do(avance2_AV) :- !, avancer(2, 0).
-do(avance2_VA) :- !, avancer(2, 1).
+do(help) 		:- !, instructions.
+do(quit) 		:- !.
+do(avance1_AV)	:- !, avancer(1, 0).
+do(avance1_VA)	:- !, avancer(1, 1).
+do(avance2_AV)	:- !, avancer(2, 0).
+do(avance2_VA)	:- !, avancer(2, 1).
+do(stock)		:- !, stock.
 do(X) :- print('Unknown command : "'), print(X), print('"'), nl, instructions.
 
 
@@ -100,6 +100,12 @@ avancer(Dist, Prendre) :-
 	!.
 
 
+stock :-
+	getState(_, _, _, Joueurs, JoueurCourant),
+	getPlayer(Joueurs, JoueurCourant, Player),
+	getPlayerReserve(Player, Reserve),
+	print('Stock for player numero '), print(JoueurCourant), print(' : '), print(Reserve), nl,
+	!.
 
 
 

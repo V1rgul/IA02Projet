@@ -50,6 +50,9 @@ jouer(Player, NewPlayer, Bourse, NewBourse, Elems, Prendre) :-
 	otherElem(Prendre, Vendre),
 	nth0(Vendre, Elems, ElemVendre),
 	getPlayerReserve(Player, Reserve),
+	print('Debug calling increment '), print(Reserve), print(', '), print(ElemGarde), nl,
 	increment(Reserve, ElemGarde, NewReserve),
+	print('Debug NewReserve '), print(NewReserve), nl,
 	setPlayerReserve(Player, NewReserve, NewPlayer),
+	print('Debug NewPlayer '), print(NewPlayer), nl, 
 	decrement(Bourse, ElemVendre, NewBourse).
