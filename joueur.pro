@@ -96,4 +96,5 @@ jouer(Player, NewPlayer, Bourse, NewBourse, Elems, Prendre) :-
 	increment(Reserve, ElemGarde, NewReserve),
 	setPlayerReserve(Player, NewReserve, NewPlayer),
 	%print('Debug NewPlayer '), print(NewPlayer), nl, 
-	decrement(Bourse, ElemVendre, NewBourse).
+	decrement(Bourse, ElemVendre, NewBourse),
+	print('pris : '), print(ElemGarde), print(', vendu : '), print(ElemVendre), nl.
