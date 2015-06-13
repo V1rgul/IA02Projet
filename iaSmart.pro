@@ -14,11 +14,6 @@ iaJouer(Bourse, Piles, Trader, Reserve, OtherReserve, Dist, Prendre) :-
 	nth0(Trader4, Piles, TempPile4),
 	nth0(0, TempPile4, Elem_d),
 
-
-
-	getPlayerPoints(Bourse, Reserve, MyScore),
-	getPlayerPoints(Bourse, OtherReserve, OtherScore),
-	InitialDiff is MyScore-OtherScore,
 	emptyList(Diffs),
 
 	%Test Dist 1, Prendre 0

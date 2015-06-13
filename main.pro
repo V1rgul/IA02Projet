@@ -65,6 +65,10 @@ instructions :-
 	print('  quit. \t- exit the game.'), nl,
 	print('  stock.\t- show your current stocks'), nl,
 	print('  score.\t- show your current score'), nl,
+	print('  avance1_AV. \t- Do one step, buy the first item, sell the second one.'), nl,
+	print('  avance1_VA. \t- Do one step, sell the first item, buy the second one.'), nl,
+	print('  avance2_AV. \t- Do two step, buy the first item, sell the second one.'), nl,
+	print('  avance2_VA. \t- Do two step, sell the first item, buy the second one.'), nl,
 	nl.
 
 go :- done.
