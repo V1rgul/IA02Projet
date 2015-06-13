@@ -41,7 +41,7 @@ getPlayerReserve(Player, Reserve) :-
 setPlayerReserve(Player, Reserve, NewPlayer) :-
 	replace(Player, 1, Reserve, NewPlayer).
 
-%getPlayerPoints(+Bourse, +Reserve, -Points) :-
+%getPlayerPoints(+Bourse, +Reserve, -Points)
 getPlayerPoints(Bourse, Reserve, Points) :-
 	getValueOf(Bourse, ble, ValueBleBourse),
 	getValueOf(Reserve, ble, ValueBleReserve),

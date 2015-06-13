@@ -173,7 +173,7 @@ printTable(Table, Title, TitleSpaces, Pos   , Length) :-
 
 printTableLine(_   , Length, Length) :- !.
 printTableLine(Line, Pos   , Length) :-
-	printIfElse(Pos, 0, '', ' | '),
+	printIfElse(Pos, 0, '', '\t| '),
 	nth0(Pos, Line, Elem),
 	print(Elem),
 	Pos2 is Pos+1,

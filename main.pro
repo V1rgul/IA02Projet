@@ -6,13 +6,18 @@
 spy.
 
 
+main(JoueursHumains) :-
+	JoueursIA is 2-JoueursHumains,
+	main(JoueursHumains, JoueursIA).
+
+
 main(JoueursHumains, JoueursIA) :-
 	JoueursHumains >= 0,
-	JoueursHumains =< 4,
+	JoueursHumains =< 2,
 	JoueursIA >= 0,
-	JoueursIA =< 4,
+	JoueursIA =< 2,
 	JoueursSomme is JoueursHumains + JoueursIA,
-	JoueursSomme =< 4,
+	JoueursSomme =< 2,
 	!,
 	init(JoueursHumains, JoueursIA),
 	print('Welcome !'), nl,
@@ -20,7 +25,7 @@ main(JoueursHumains, JoueursIA) :-
 	go.
 
 main(_             , _        ) :-
-	print('Le nombre de joueurs humains et IA doit etre entre 0 et 4, et la somme des 2 inferieure a 4'),
+	print('Le nombre de joueurs humains et IA doit etre entre 0 et 2, et la somme des 2 inferieure a 2'),
 	!.
 
 init(JoueursHumains, JoueursIA) :-
@@ -59,22 +64,25 @@ instructions :-
 	print('  help. \t- this information.'), nl,
 	print('  quit. \t- exit the game.'), nl,
 	print('  stock.\t- show your current stocks'), nl,
+	print('  score.\t- show your current score'), nl,
 	nl.
 
 go :- done.
-go :- %next player is an IA
-	nextIsIAJouer, !,
-	displayState,
-	!, go.
 go :- %next player is a Human
 	displayState,
-	print('>> '),
-	read(X),
-	nextIsIAJouer,
-	X \= quit,
-	do(X),
+	play,
 	!, go.
 go :- print(' Exit ! '), nl.
+
+play :- %IA
+	nextIsIAJouer,
+	!.
+play :- %Human
+	print('>> '),
+	read(X),
+	X \= quit,
+	do(X),
+	!.
 
 
 do(help) 		:- !, instructions.
@@ -84,6 +92,7 @@ do(avance1_VA)	:- !, avancer(1, 1).
 do(avance2_AV)	:- !, avancer(2, 0).
 do(avance2_VA)	:- !, avancer(2, 1).
 do(stock)		:- !, stock.
+do(score)		:- !, score.
 do(X) :- print('Unknown command : "'), print(X), print('"'), nl, instructions.
 
 
@@ -93,15 +102,24 @@ done :-
 	%print('Debug Piles: '), print(Piles), nl,
 	plateauCheckEnd(Piles),
 	nl,
-	print('Partie terminee !'), nl.
+	print('Game over !'), nl,
+	displayScores,
+	!.
 
+
+
+displayScores :-
+	getState(_, Bourse, _, Joueurs, _),
+	printScores(Bourse, Joueurs).
 
 nextIsIAJouer :-
 	getState(Piles, Bourse, Trader, Joueurs, JoueurCourant),
 	getPlayer(Joueurs, JoueurCourant, Joueur),
 	getPlayerType(Joueur, Type),
-	Type == joueurIA,
-
+	%print('Player Type: '), print(Type), nl,
+	!, %apparently important cut
+	Type = joueurIA,
+	!,
 	print('Is an IA'), nl,
 	getPlayerReserve(Joueur, Reserve),
 	otherElem(JoueurCourant, JoueurCourantOther), %I know, uses another functions for smthg else
@@ -143,6 +161,16 @@ stock :-
 	getPlayerReserve(Player, Reserve),
 	print('Stock for player numero '), print(JoueurCourant), print(' : '), print(Reserve), nl,
 	!.
+
+score :-
+	getState(_, Bourse, _, Joueurs, JoueurCourant),
+	getPlayer(Joueurs, JoueurCourant, Joueur),
+	getPlayerReserve(Joueur, Reserve),
+	getPlayerPoints(Bourse, Reserve, Points),
+	print('Score for player numero '), print(JoueurCourant), print(' : '), print(Points), nl,
+	!.
+	
+
 
 
 /*TEST*/
