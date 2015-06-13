@@ -31,7 +31,9 @@ getPlayer(Players, Index, Player) :-
 
 %setPlayer(+Players,-NewPlayers,+Index,+Player)
 setPlayer(Players, NewPlayers, Index, Player) :-
+	%print('Debug setPlayer '), print(Index), print(Players), nl,
 	replace(Players, Index, Player, NewPlayers).
+	%print('Debug setPlayer A'), print(NewPlayers), nl.
 
 getPlayerReserve(Player, Reserve) :-
 	nth0(1, Player, Reserve).
@@ -81,6 +83,9 @@ nextPlayer( Players, Index, NewIndex) :-
  
 otherElem(0, 1) :- !.
 otherElem(1, 0) :- !.
+otherElem(V, 0) :-
+	print('otherElem invalid value : '), print(V), nl,
+	!.
 
 %jouer(+Reserve, -NewReserve, +Bourse, -NewBourse, +ElemGarde, +ElemVendre)
 jouer(Player, NewPlayer, Bourse, NewBourse, Elems, Prendre) :-
@@ -90,4 +95,5 @@ jouer(Player, NewPlayer, Bourse, NewBourse, Elems, Prendre) :-
 	getPlayerReserve(Player, Reserve),
 	increment(Reserve, ElemGarde, NewReserve),
 	setPlayerReserve(Player, NewReserve, NewPlayer),
+	%print('Debug NewPlayer '), print(NewPlayer), nl, 
 	decrement(Bourse, ElemVendre, NewBourse).

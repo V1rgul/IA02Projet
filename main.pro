@@ -1,6 +1,7 @@
 :- include('utils.pro').
 :- include('plateau.pro').
 :- include('joueur.pro').
+:- include('iaFixe.pro').
 
 spy.
 
@@ -61,10 +62,15 @@ instructions :-
 	nl.
 
 go :- done.
-go :-
+go :- %next player is an IA
+	nextIsIAJouer, !,
+	displayState,
+	!, go.
+go :- %next player is a Human
 	displayState,
 	print('>> '),
 	read(X),
+	nextIsIAJouer,
 	X \= quit,
 	do(X),
 	!, go.
@@ -90,6 +96,28 @@ done :-
 	print('Partie terminee !'), nl.
 
 
+nextIsIAJouer :-
+	getState(Piles, Bourse, Trader, Joueurs, JoueurCourant),
+	getPlayer(Joueurs, JoueurCourant, Joueur),
+	getPlayerType(Joueur, Type),
+	Type == joueurIA,
+
+	print('Is an IA'), nl,
+	getPlayerReserve(Joueur, Reserve),
+	otherElem(JoueurCourant, JoueurCourantOther), %I know, uses another functions for smthg else
+	getPlayer(Joueurs, JoueurCourantOther, JoueurOther),
+	getPlayerReserve(JoueurOther, ReserveOther),
+
+	iaJouer(Bourse, Piles, Trader, Reserve, ReserveOther, Dist, Prendre),
+	avancer(Dist, Prendre),
+	print('Ia numero '), print(JoueurCourant), print(' a fini de jouer'), nl,
+	!.
+
+nextIsIAJouer :- 
+	print('Not an IA'), nl,
+	fail,
+	!.
+
 
 
 avancer(Dist, Prendre) :-
@@ -99,6 +127,7 @@ avancer(Dist, Prendre) :-
 	print('Avance de '), print(Dist), print(', pions pris : '), print(Elems), nl,
 
 	getPlayer(Joueurs, JoueurCourant, Player),
+	%print('Debug Selected Player : '), print(Player), nl,
 	jouer(Player, NewPlayer, Bourse, NewBourse, Elems, Prendre), 
 	setPlayer(Joueurs, NewJoueurs, JoueurCourant, NewPlayer),
 
