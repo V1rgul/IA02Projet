@@ -112,6 +112,28 @@ printPileStack(N) :-
 	print('------ '),
 	printPileStack(N2).
 
+%generatePlayerScoreArray(+Type,+Id,+Score,-Out)
+generatePlayerScoreArray(Type, Id, Score, [Score, Type, Id]).
+
+%generatePlayerScoreArrayS(+Bourse,+Joueurs,+Pos,+Length,-Array).
+generatePlayerScoreArrayS(_     , _      , Length, Length, []   ).
+generatePlayerScoreArrayS(Bourse, Joueurs, Pos   , Length, Array) :-
+	getPlayer(Joueurs, Pos, Joueur),
+	getPlayerReserve(Joueur, Reserve),
+	getPlayerType(Joueur, Type),
+	getPlayerPoints(Bourse, Reserve, Points),
+	generatePlayerScoreArray(Type, Pos, Points, PlayerScoreA),
+
+	NewPos is Pos+1,
+	generatePlayerScoreArrayS(Bourse, Joueurs, NewPos, Length, OldArray),
+	append(OldArray, [PlayerScoreA], Array).
+
+printScores(Bourse, Joueurs) :-
+	length(Joueurs, NJoueurs),
+	generatePlayerScoreArrayS(Bourse, Joueurs, 0, NJoueurs, Array),
+	msort(Array, SortedR),
+	reverse(SortedR, Sorted),
+	printTable(Sorted, 'Winner : ', '         ').
 
 
 %plateauDisplay(+Bourse, +Piles, +Pos)

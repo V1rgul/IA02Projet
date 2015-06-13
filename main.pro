@@ -102,8 +102,15 @@ done :-
 	%print('Debug Piles: '), print(Piles), nl,
 	plateauCheckEnd(Piles),
 	nl,
-	print('Game over !'), nl.
+	print('Game over !'), nl,
+	displayScores,
+	!.
 
+
+
+displayScores :-
+	getState(_, Bourse, _, Joueurs, _),
+	printScores(Bourse, Joueurs).
 
 nextIsIAJouer :-
 	getState(Piles, Bourse, Trader, Joueurs, JoueurCourant),
