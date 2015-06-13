@@ -65,10 +65,12 @@ instructions :-
 	print('  quit. \t- exit the game.'), nl,
 	print('  stock.\t- show your current stocks'), nl,
 	print('  score.\t- show your current score'), nl,
-	print('  avance1_AV. \t- Do one step, buy the first item, sell the second one.'), nl,
-	print('  avance1_VA. \t- Do one step, sell the first item, buy the second one.'), nl,
-	print('  avance2_AV. \t- Do two step, buy the first item, sell the second one.'), nl,
-	print('  avance2_VA. \t- Do two step, sell the first item, buy the second one.'), nl,
+	print('  avance1_AV. \t- Do one step,    buy the first item, sell the second one.'), nl,
+	print('  avance1_VA. \t- Do one step,    sell the first item, buy the second one.'), nl,
+	print('  avance2_AV. \t- Do two steps,   buy the first item, sell the second one.'), nl,
+	print('  avance2_VA. \t- Do two steps,   sell the first item, buy the second one.'), nl,
+	print('  avance3_AV. \t- Do three steps, buy the first item, sell the second one.'), nl,
+	print('  avance3_VA. \t- Do three steps, sell the first item, buy the second one.'), nl,
 	nl.
 
 go :- done.
@@ -95,6 +97,8 @@ do(avance1_AV)	:- !, avancer(1, 0).
 do(avance1_VA)	:- !, avancer(1, 1).
 do(avance2_AV)	:- !, avancer(2, 0).
 do(avance2_VA)	:- !, avancer(2, 1).
+do(avance3_AV)	:- !, avancer(3, 0).
+do(avance3_VA)	:- !, avancer(3, 1).
 do(stock)		:- !, stock.
 do(score)		:- !, score.
 do(X) :- print('Unknown command : "'), print(X), print('"'), nl, instructions.
