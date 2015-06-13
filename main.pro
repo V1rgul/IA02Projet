@@ -99,7 +99,6 @@ avancer(Dist, Prendre) :-
 	print('Avance de '), print(Dist), print(', pions pris : '), print(Elems), nl,
 
 	getPlayer(Joueurs, JoueurCourant, Player),
-	print('Debug Selected Player : '), print(Player), nl,
 	jouer(Player, NewPlayer, Bourse, NewBourse, Elems, Prendre), 
 	setPlayer(Joueurs, NewJoueurs, JoueurCourant, NewPlayer),
 
@@ -123,6 +122,8 @@ test([[sucre,riz,ble],[cacao,cafe],[mais]]).
 
 
 test_bourse([[ble,7],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
+test_a([[ble,1],[riz,1],[cacao,1],[cafe,1],[sucre,5],[mais,6]]).
+test_b([[ble,1],[riz,1],[cacao,1],[cafe,1],[sucre,6],[mais,1]]).
 af([1,2,3]).
 
 
@@ -135,7 +136,8 @@ test_stuff :-
 	print('Garde de '), print(Elem1), print(', Vente de '), print(Elem2), nl,
 
 	plateauDisplay(Piles14, NewBourse, Pos14).*/
-	test(Stocks),
-	print(Stocks),
-	replace(Stocks, 0, rien, NewStocks),
-	print(NewStocks).
+	test_a(Stocks),
+	test_b(Reserve),
+	%print(Stocks), nl,
+	getPlayerPoints(Stocks, Reserve, Value),
+	print(Value), nl.

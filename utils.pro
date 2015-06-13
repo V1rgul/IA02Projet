@@ -102,6 +102,21 @@ private_replace([T|Q], Pos, RemplaceBy, Index, NewListe) :-
 	private_replace(Q, Pos, RemplaceBy, TempIndex, TempListe),
 	append([T], TempListe, NewListe).
 
+%getValueOf(+List, +Element, -Value)
+%	Exemple:
+%	+List:		[[ble,7],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]
+%	+Element:	ble	
+% 	-Value 		7
+getValueOf([], _, _) :-
+	!.
+getValueOf([[Element,V]|Q], Element, Value) :-
+	Value = V,
+	getValueOf(Q, Element, Value).
+getValueOf([[_,_]|Q], Element, Value) :-
+	getValueOf(Q, Element, Value).
+
+
+
 %randomElem(+Liste, -Element)
 %	Exemple:
 %	+List:		[[sucre,3],[ble,1]]

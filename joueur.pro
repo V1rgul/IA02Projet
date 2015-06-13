@@ -23,8 +23,7 @@ createPlayers(NHumans, NIAs, Players) :-
 	createPlayersHuman(NHumans, Humans),
 	createPlayersIA(   NIAs,    IAs),
 	append(Humans, IAs, Players),
-	print('Created '), print(NHumans), print(' Humans and '), print(NIAs), print(' IAs :'), nl,
-	print(Players), nl.
+	print('Created '), print(NHumans), print(' Humans and '), print(NIAs), print(' IAs.'), nl.
 
 %getPlayer(+Players,+Index,-Player)
 getPlayer(Players, Index, Player) :-
@@ -32,15 +31,36 @@ getPlayer(Players, Index, Player) :-
 
 %setPlayer(+Players,-NewPlayers,+Index,+Player)
 setPlayer(Players, NewPlayers, Index, Player) :-
-	print('Debug setPlayer '), print(Index), print(Players), nl,
-	replace(Players, Index, Player, NewPlayers),
-	print('Debug setPlayer A'), print(NewPlayers), nl.
+	replace(Players, Index, Player, NewPlayers).
 
 getPlayerReserve(Player, Reserve) :-
 	nth0(1, Player, Reserve).
 
 setPlayerReserve(Player, Reserve, NewPlayer) :-
 	replace(Player, 1, Reserve, NewPlayer).
+
+%getPlayerPoints(+Bourse, +Reserve, -Points) :-
+getPlayerPoints(Bourse, Reserve, Points) :-
+	getValueOf(Bourse, ble, ValueBleBourse),
+	getValueOf(Reserve, ble, ValueBleReserve),
+	BlePoints is ValueBleBourse*ValueBleReserve,
+	getValueOf(Bourse, riz, ValueRizBourse),
+	getValueOf(Reserve, riz, ValueRizReserve),
+	RizPoints is ValueRizBourse*ValueRizReserve,
+	getValueOf(Bourse, cacao, ValueCacaoBourse),
+	getValueOf(Reserve, cacao, ValueCacaoReserve),
+	CacaoPoints is ValueCacaoBourse*ValueCacaoReserve,
+	getValueOf(Bourse, cafe, ValueCafeBourse),
+	getValueOf(Reserve, cafe, ValueCafeReserve),
+	CafePoints is ValueCafeBourse*ValueCafeReserve,
+	getValueOf(Bourse, sucre, ValueSucreBourse),
+	getValueOf(Reserve, sucre, ValueSucreReserve),
+	SucrePoints is ValueSucreBourse*ValueSucreReserve,
+	getValueOf(Bourse, mais, ValueMaisBourse),
+	getValueOf(Reserve, mais, ValueMaisReserve),
+	MaisPoints is ValueMaisBourse*ValueMaisReserve,
+	Points is BlePoints+RizPoints+CacaoPoints+CafePoints+SucrePoints+MaisPoints.
+
 
 
 getPlayerType(Player, Type) :-
@@ -70,5 +90,4 @@ jouer(Player, NewPlayer, Bourse, NewBourse, Elems, Prendre) :-
 	getPlayerReserve(Player, Reserve),
 	increment(Reserve, ElemGarde, NewReserve),
 	setPlayerReserve(Player, NewReserve, NewPlayer),
-	print('Debug NewPlayer '), print(NewPlayer), nl, 
 	decrement(Bourse, ElemVendre, NewBourse).
