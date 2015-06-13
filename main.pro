@@ -1,7 +1,7 @@
 :- include('utils.pro').
 :- include('plateau.pro').
 :- include('joueur.pro').
-:- include('iaFixe.pro').
+:- include('iaSmart.pro').
 
 spy.
 
@@ -151,8 +151,8 @@ test([[sucre,riz,ble],[cacao,cafe],[mais]]).
 
 
 test_bourse([[ble,7],[riz,6],[cacao,6],[cafe,6],[sucre,6],[mais,6]]).
-test_a([[ble,1],[riz,1],[cacao,1],[cafe,1],[sucre,5],[mais,6]]).
-test_b([[ble,1],[riz,1],[cacao,1],[cafe,1],[sucre,6],[mais,1]]).
+test_a([[ble,1],[riz,2],[cacao,1],[cafe,2],[sucre,1],[mais,1]]).
+test_b([[ble,1],[riz,1],[cacao,1],[cafe,1],[sucre,1],[mais,1]]).
 af([1,2,3]).
 
 
@@ -165,8 +165,11 @@ test_stuff :-
 	print('Garde de '), print(Elem1), print(', Vente de '), print(Elem2), nl,
 
 	plateauDisplay(Piles14, NewBourse, Pos14).*/
-	test_a(Stocks),
-	test_b(Reserve),
+	test_bourse(Bourse),
+	test_a(Reserve),
+	test_b(OtherReserve),
+	genererPiles(Pile),
 	%print(Stocks), nl,
-	getPlayerPoints(Stocks, Reserve, Value),
-	print(Value), nl.
+	iaJouer(Bourse, Pile, 0, Reserve, OtherReserve, A, B),
+	print(A), nl,
+	print(B), nl.
