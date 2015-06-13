@@ -124,7 +124,7 @@ nextIsIAJouer :-
 	!, %apparently important cut
 	Type = joueurIA,
 	!,
-	print('Is an IA'), nl,
+	%print('Is an IA'), nl,
 	getPlayerReserve(Joueur, Reserve),
 	otherElem(JoueurCourant, JoueurCourantOther), %I know, uses another functions for smthg else
 	getPlayer(Joueurs, JoueurCourantOther, JoueurOther),
@@ -136,7 +136,7 @@ nextIsIAJouer :-
 	!.
 
 nextIsIAJouer :- 
-	print('Not an IA'), nl,
+	%print('Not an IA'), nl,
 	fail,
 	!.
 
@@ -146,7 +146,7 @@ avancer(Dist, Prendre) :-
 	getState(Piles, Bourse, Trader, Joueurs, JoueurCourant),
 
 	plateauAvancer(Piles, NewPiles, Trader, NewTrader, Dist, Elems),
-	print('Avance de '), print(Dist), print(', pions pris : '), print(Elems), nl,
+	print('Avance de '), print(Dist), print(', '), %nl, %print(', pions pris : '), print(Elems), nl,
 
 	getPlayer(Joueurs, JoueurCourant, Player),
 	%print('Debug Selected Player : '), print(Player), nl,
